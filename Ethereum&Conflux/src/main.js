@@ -6,16 +6,20 @@ import storage from 'store'
 import Antd from 'ant-design-vue'
 import i18n from './locales'
 import config from '@/config'
-
-import 'assets/css/global.less' //全局样式
-
-import 'components/utils' //全局公用组件
+//全局样式
+import 'assets/css/global.less'
+//全局公用组件
+import 'components/utils'
 // import 'assets/js/web3'
-import './filters' //全局公用filter
+//全局公用filter
+import './filters'
+import API from '@/apis/server/api.js'
 
 Vue.use(Antd)
 Vue.config.productionTip = false
 const lang = storage.get('lang') || config.lang
+
+Vue.prototype.$API = API
 
 function checkRouter() {
   router.beforeEach((to, from, next) => {
@@ -32,7 +36,7 @@ function checkRouter() {
     }
 
     if (isLogin && to.path === '/error/needLogin') {
-      to.query.redirect ? next( to.query.redirect ) : next()
+      to.query.redirect ? next(to.query.redirect) : next()
       return
     }
 

@@ -27,7 +27,7 @@
                 <a-space size="large">
                   <a-text>{{ item.address | formatUser }}</a-text>
                   <a-text :style="{ color: formatTrustType(item.trustType) }">
-                    {{ formatTrustType(item.trustType, "desc") }}
+                    {{ formatTrustType(item.trustType, 'desc') }}
                   </a-text>
                 </a-space>
                 <a-space class="actions f-r">
@@ -51,7 +51,7 @@
       </div>
       <div class="your-trusts-container">
         <div class="title">
-          <a-text>{{ $t("trust.yourTrusts") }} ({{ yourTrusts.total }})</a-text>
+          <a-text>{{ $t('trust.yourTrusts') }} ({{ yourTrusts.total }})</a-text>
         </div>
         <a-spin
           class="trusts-list"
@@ -71,7 +71,7 @@
               >
                 <div class="list-item-wrap">
                   <a-space size="large">
-                    <a-text>{{ item.returnValues.BeenTrusted | formatUser }}</a-text>
+                    <a-text>{{ item.beenTrusted | formatUser }}</a-text>
                     <div class="add-user">
                       <a-icon v-if="item.isAdded" type="user-add" />
                     </div>
@@ -82,7 +82,7 @@
                       src="@/assets/img/copy.png"
                       class="copy-btn pointer"
                       type="copy"
-                      @click="copyFn(item.returnValues.BeenTrusted)"
+                      @click="copyFn(item.beenTrusted)"
                     />
                   </div>
                 </div>
@@ -97,23 +97,24 @@
 </template>
 
 <script>
-import { toCopy } from "assets/js/util";
-import i18n from "@/locales";
-import Api from "@/apis";
-import infiniteScroll from "vue-infinite-scroll";
+import { toCopy } from 'assets/js/util'
+import i18n from '@/locales'
+import Api from '@/apis'
+import infiniteScroll from 'vue-infinite-scroll'
+import request from '@/util/request'
 
 export default {
   directives: {
-    infiniteScroll,
+    infiniteScroll
   },
   data() {
     return {
       search: {
         timer: null,
-        inputVal: "",
+        inputVal: '',
         loading: false,
         total: 0,
-        list: [],
+        list: []
       },
       yourTrusts: {
         pn: 1,
@@ -127,27 +128,27 @@ export default {
   },
   computed: {
     user() {
-      return this.$store.state.user;
-    },
+      return this.$store.state.user
+    }
   },
   methods: {
     copyFn(content) {
       toCopy(content).then(() => {
-        this.$message.success(this.$t('message.copySuccess'));
-      });
+        this.$message.success(this.$t('message.copySuccess'))
+      })
     },
     onSearch() {
       if (!this.search.inputVal) {
-        return;
+        return
       }
-      this.search.loading = true;
-      this.search.timer && this.removeSearchTimer();
+      this.search.loading = true
+      this.search.timer && this.removeSearchTimer()
       this.search.timer = setTimeout(() => {
-        Api.searchByAdress(this.search.inputVal).then((res) => {
-          this.search.list = res.list;
-          this.search.loading = false;
-        });
-      }, 1000);
+        Api.searchByAdress(this.search.inputVal).then(res => {
+          this.search.list = res.list
+          this.search.loading = false
+        })
+      }, 1000)
     },
     formatTrustType(type, formatType) {
       //1已信任您 2您已信任 3互相信任
@@ -155,60 +156,78 @@ export default {
         // case 0:
         //   return formatType === "desc" ? i18n.t("trust.trustYou") : "#00C1DC";
         case 1:
-          return formatType === "desc" ? i18n.t("trust.trustYou") : "#00C1DC";
+          return formatType === 'desc' ? i18n.t('trust.trustYou') : '#00C1DC'
         case 2:
-          return formatType === "desc" ? i18n.t("trust.youTrust") : "#00C1DC";
+          return formatType === 'desc' ? i18n.t('trust.youTrust') : '#00C1DC'
         case 3:
-          return formatType === "desc" ? i18n.t("trust.bothTrust") : "#00D477";
+          return formatType === 'desc' ? i18n.t('trust.bothTrust') : '#00D477'
         default:
-          return formatType === "desc"
-            ? i18n.t("trust.unknownTrust")
-            : "#082C4C";
+          return formatType === 'desc'
+            ? i18n.t('trust.unknownTrust')
+            : '#082C4C'
       }
     },
     addTrust(_address) {
-      this.search.loading = true;
+      this.search.loading = true
       Api.addTrust(_address)
-        .then((res) => {
-          this.getMyTrusts();
-          this.onSearch();
+        .then(res => {
+          this.getMyTrusts()
+          this.onSearch()
         })
         .catch(() => {
-          this.search.loading = false;
-        });
+          this.search.loading = false
+        })
     },
     minusTrust(_address) {
-      this.search.loading = true;
+      this.search.loading = true
       Api.minusTrust(_address)
-        .then((res) => {
-          this.getMyTrusts();
-          this.onSearch();
+        .then(res => {
+          this.getMyTrusts()
+          this.onSearch()
         })
         .catch(() => {
-          this.search.loading = false;
-        });
+          this.search.loading = false
+        })
     },
     removeSearchTimer() {
       if (this.search.timer) {
-        clearTimeout(this.search.timer);
-        this.search.timer = null;
+        clearTimeout(this.search.timer)
+        this.search.timer = null
       }
     },
+    /*
+     *@FunctionName:  getMyTrusts
+     *@Description: 获取我信任的地址
+     *@Author: yozora
+     *@Last Modified By: yozora
+     *@Date: 2021-03-02 09:56:07
+     */
     getMyTrusts() {
       this.yourTrusts.loading = true
       this.yourTrusts.busy = false
       this.yourTrusts.pn++
       this.yourTrusts.list = []
-      if (this.yourTrusts.total && this.yourTrusts.list.length >= this.yourTrusts.total) {
-        this.$message.warning(this.$t('noMore'));
-        this.yourTrusts.loading = false;
-        this.yourTrusts.busy = false;
-        return;
+      if (
+        this.yourTrusts.total &&
+        this.yourTrusts.list.length >= this.yourTrusts.total
+      ) {
+        this.$message.warning(this.$t('noMore'))
+        this.yourTrusts.loading = false
+        this.yourTrusts.busy = false
+        return
       }
-      Api.getMyTrusts()
-        .then((res) => {
-          this.yourTrusts.total = res.total
-          this.yourTrusts.list = [...this.yourTrusts.list, ...res.list]
+      request({
+        url: this.$API.getYouTrust,
+        method: 'POST',
+        data: {
+          trustSender: this.$store.state.user
+        }
+      })
+        .then(response => {
+          //挖矿-获取我信任的人
+          this.yourTrusts.total = response.data.data.length
+          this.yourTrusts.list = response.data.data
+
           this.yourTrusts.loading = false
           this.yourTrusts.busy = false
         })
@@ -220,34 +239,35 @@ export default {
     },
     showInvitedUrl() {
       const address = this.$route.query.q ? this.$route.query.q : ''
-      if(!address || !Api.checkAddress(address)) return
-      this.search.inputVal = address;
-      this.onSearch();
-    },
+      if (!address || !Api.checkAddress(address)) return
+      this.search.inputVal = address
+      this.onSearch()
+    }
   },
   beforeDestroy() {
-    this.removeSearchTimer();
+    this.removeSearchTimer()
   },
   mounted() {
-    this.showInvitedUrl();
-  },
-};
+    this.showInvitedUrl()
+  }
+}
 </script>
 
 <style lang="less" scoped>
 .trust {
   .search-wrap {
     position: relative;
-    padding: 0 30/@r 24/@r;
-    margin-bottom: 40/@r;
+    padding: 0 30 / @r 24 / @r;
+    margin-bottom: 40 / @r;
     z-index: 1;
-    background: url(~@/assets/img/mining_banner.png) no-repeat bottom center/100%;
-    border-radius: 30/@r;
-    height: 340/@r;
+    background: url(~@/assets/img/mining_banner.png) no-repeat bottom
+      center/100%;
+    border-radius: 30 / @r;
+    height: 340 / @r;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    .input-wrap{
+    .input-wrap {
       position: relative;
       .search-input {
         /deep/ input {
@@ -278,12 +298,13 @@ export default {
             width: 100%;
             display: flex;
             justify-content: space-between;
-            padding: 0 20/@r;
-            height: 70/@r;
-            line-height: 70/@r;
-            .add-btn, .delete-btn{
-              width: 40/@r;
-              height: 40/@r;
+            padding: 0 20 / @r;
+            height: 70 / @r;
+            line-height: 70 / @r;
+            .add-btn,
+            .delete-btn {
+              width: 40 / @r;
+              height: 40 / @r;
             }
             &:nth-child(2n) {
               background: rgba(0, 0, 0, 0.1);
@@ -318,8 +339,8 @@ export default {
         width: 20 / @r;
         text-align: center;
       }
-      .copy-btn{
-        width: 32/@r;
+      .copy-btn {
+        width: 32 / @r;
       }
     }
   }

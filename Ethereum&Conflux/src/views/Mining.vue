@@ -11,14 +11,14 @@
           <a-icon type="copy" @click="copyFn(user)" />
         </div>
         <div class="slogan">
-          <div>{{ $t("mining.info.title") }}</div>
+          <div>{{ $t('mining.info.title') }}</div>
           <div>
-            <a-text>{{ $t("mining.info.slogan1") }}</a-text>
+            <a-text>{{ $t('mining.info.slogan1') }}</a-text>
             <a-text success>{{ myInfo.needInviteCount }}</a-text>
-            <a-text>{{ $t("mining.info.slogan2") }}</a-text>
+            <a-text>{{ $t('mining.info.slogan2') }}</a-text>
           </div>
           <div>
-            {{ $t("mining.info.loopAddress") }}：{{LOOPToken}}
+            {{ $t('mining.info.loopAddress') }}：{{ LOOPToken }}
             <a-icon type="copy" @click="copyFn(LOOPToken)" />
           </div>
         </div>
@@ -29,13 +29,13 @@
             class="mining-info"
             v-if="
               myInfo.needInviteCount < 1 &&
-              myInfo.ifTrustLOOP &&
-              myInfo.showMiningInfo
+                myInfo.ifTrustLOOP &&
+                myInfo.showMiningInfo
             "
           >
             <div class="title">
               <img src="@/assets/img/icon.png" />
-              <a-text strong>{{ $t("mining.mining.title") }}</a-text>
+              <a-text strong>{{ $t('mining.mining.title') }}</a-text>
             </div>
             <div class="mining-count">
               <div class="left">
@@ -49,7 +49,7 @@
                 </a-text>
                 <a-text link disabled class="count" v-else> 0 </a-text>
                 <a-tooltip placement="bottom" title="点击上方余额进行收取">
-                  <span class="tip">{{ $t("mining.mining.curToken") }}</span>
+                  <span class="tip">{{ $t('mining.mining.curToken') }}</span>
                   <a-icon type="question-circle" />
                 </a-tooltip>
               </div>
@@ -59,23 +59,23 @@
                     myInfo.unClaimTokens | formatNumber(2)
                   }}</span>
                   <span class="tip">{{
-                    $t("mining.mining.unClaimTokens")
+                    $t('mining.mining.unClaimTokens')
                   }}</span>
                 </div>
                 <div class="item">
                   <span class="count">{{ myInfo.trustCalc }}</span>
-                  <span class="tip">{{ $t("mining.mining.trustCalc") }}</span>
+                  <span class="tip">{{ $t('mining.mining.trustCalc') }}</span>
                 </div>
               </div>
             </div>
             <div class="foot">
               <!-- 剩余领取时间 -->
               <div class="tip-wrap">
-                <div>{{ $t("mining.mining.tip1") }}: {{ myInfo.time }}</div>
-                <div class="tip">{{ $t("mining.mining.tip2") }}</div>
+                <div>{{ $t('mining.mining.tip1') }}: {{ myInfo.time }}</div>
+                <div class="tip">{{ $t('mining.mining.tip2') }}</div>
               </div>
               <div class="block-btn" @click="updateAndClaim">
-                {{ $t("mining.mining.btnTip") }}
+                {{ $t('mining.mining.btnTip') }}
               </div>
             </div>
           </div>
@@ -83,20 +83,22 @@
             class="task-one"
             v-if="
               myInfo.needInviteCount ||
-              (myInfo.needInviteCount < 1 &&
-                !myInfo.ifTrustLOOP &&
-                !myInfo.showTaskTwo)
+                (myInfo.needInviteCount < 1 &&
+                  !myInfo.ifTrustLOOP &&
+                  !myInfo.showTaskTwo)
             "
           >
             <div class="top">
               <div class="title">
-                 {{ $t("mining.mining.locked") }}
+                {{ $t('mining.mining.locked') }}
                 <div class="sub-title">
-                  <a-text>{{$t("mining.mining.steps.step1.info")}}</a-text>
+                  <a-text>{{ $t('mining.mining.steps.step1.info') }}</a-text>
                   <a-tooltip placement="bottomRight">
-                    <template slot="title">{{$t("mining.mining.steps.step1.desc")}}</template>
+                    <template slot="title">{{
+                      $t('mining.mining.steps.step1.desc')
+                    }}</template>
                     <a-text link class="f-r">
-                      {{$t("mining.mining.steps.step1.how")}}
+                      {{ $t('mining.mining.steps.step1.how') }}
                       <a-icon type="question-circle" />
                     </a-text>
                   </a-tooltip>
@@ -133,11 +135,11 @@
               <div
                 :class="{
                   'block-btn': true,
-                  disabled: myInfo.needInviteCount > 0,
+                  disabled: myInfo.needInviteCount > 0
                 }"
                 @click="toTaskTwo"
               >
-                {{$t("mining.mining.steps.next")}}
+                {{ $t('mining.mining.steps.next') }}
               </div>
             </div>
           </div>
@@ -145,19 +147,21 @@
             class="task-two"
             v-if="
               myInfo.needInviteCount < 1 &&
-              !myInfo.ifTrustLOOP &&
-              myInfo.showTaskTwo
+                !myInfo.ifTrustLOOP &&
+                myInfo.showTaskTwo
             "
           >
             <div class="top">
               <div class="title">
-                 {{ $t("mining.mining.locked") }}
+                {{ $t('mining.mining.locked') }}
                 <div class="sub-title">
-                  <a-text>{{$t("mining.mining.steps.step2.info")}}</a-text>
+                  <a-text>{{ $t('mining.mining.steps.step2.info') }}</a-text>
                   <a-tooltip placement="bottomRight">
-                    <template slot="title">{{$t("mining.mining.steps.step2.desc")}}</template>
+                    <template slot="title">{{
+                      $t('mining.mining.steps.step2.desc')
+                    }}</template>
                     <a-text link class="f-r">
-                      {{$t("mining.mining.steps.step2.why")}}
+                      {{ $t('mining.mining.steps.step2.why') }}
                       <a-icon type="question-circle" />
                     </a-text>
                   </a-tooltip>
@@ -169,7 +173,7 @@
             </div>
             <div class="bottom">
               <div class="block-btn" @click="trustLOOPToken">
-                {{ $t("mining.mining.btnTip1") }}
+                {{ $t('mining.mining.btnTip1') }}
               </div>
             </div>
           </div>
@@ -177,17 +181,15 @@
             class="task-three"
             v-if="
               myInfo.needInviteCount < 1 &&
-              myInfo.ifTrustLOOP &&
-              !myInfo.showMiningInfo
+                myInfo.ifTrustLOOP &&
+                !myInfo.showMiningInfo
             "
           >
             <div class="top">
               <div class="title">
-                 {{ $t("mining.mining.unlocked") }}
+                {{ $t('mining.mining.unlocked') }}
                 <div class="sub-title">
-                  <a-text
-                    >{{$t("mining.mining.steps.step3.info")}}</a-text
-                  >
+                  <a-text>{{ $t('mining.mining.steps.step3.info') }}</a-text>
                 </div>
               </div>
             </div>
@@ -195,30 +197,34 @@
               <img src="@/assets/img/icon_green.png" alt="" />
             </div>
             <div class="bottom">
-              <div class="block-btn" @click="showMiningInfoFn">{{$t("mining.mining.view")}}</div>
+              <div class="block-btn" @click="showMiningInfoFn">
+                {{ $t('mining.mining.view') }}
+              </div>
             </div>
           </div>
         </a-spin>
       </div>
       <div class="copy-task">
         <div class="title">
-          <a-text block strong>{{ $t("mining.task.title") }}</a-text>
+          <a-text block strong>{{ $t('mining.task.title') }}</a-text>
         </div>
         <div class="content">
           <a-text block class="info-content">
-            {{ $t("mining.task.info") }}
+            {{ $t('mining.task.info') }}
           </a-text>
           <div class="share-content ellipsis">{{ inviteLink }}{{ user }}</div>
-          <div class="block-btn" @click="copyFn(inviteLink + user)"> {{ $t("mining.task.copy") }}</div>
+          <div class="block-btn" @click="copyFn(inviteLink + user)">
+            {{ $t('mining.task.copy') }}
+          </div>
         </div>
       </div>
       <div class="trusts-container">
         <div class="title">
           <a-text
-            >{{ $t("mining.invited.title") }} ({{ yourTrusts.total }})</a-text
+            >{{ $t('mining.invited.title') }} ({{ yourTrusts.total }})</a-text
           >
           <a-text class="tip"
-            >{{ $t("mining.invited.titleTip") }}:
+            >{{ $t('mining.invited.titleTip') }}:
             {{ yourTrusts.speedCount }}</a-text
           >
         </div>
@@ -244,9 +250,7 @@
                       size="large"
                       src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png"
                     />
-                    <a-text>{{
-                      item.returnValues.TrustSender | formatUser
-                    }}</a-text>
+                    <a-text>{{ item.trustSender | formatUser }}</a-text>
                     <div class="add-user">
                       <a-icon v-if="item.isAdded" type="user-add" />
                     </div>
@@ -257,7 +261,7 @@
                       src="@/assets/img/copy.png"
                       class="copy-btn pointer"
                       type="copy"
-                      @click="copyFn(item.returnValues.TrustSender)"
+                      @click="copyFn(item.trustSender)"
                     />
                   </div>
                 </div>
@@ -271,20 +275,21 @@
   </div>
 </template>
 <script>
-import { toCopy } from "assets/js/util";
-import store from "store";
-import Api from "@/apis";
-import infiniteScroll from "vue-infinite-scroll";
+import { toCopy } from 'assets/js/util'
+import store from 'store'
+import Api from '@/apis'
+import infiniteScroll from 'vue-infinite-scroll'
+import request from '@/util/request'
 
 let timer = null //挖矿时间倒计时定时器
 let infoTimer = null //获取挖矿信息定时器
 export default {
   directives: {
-    infiniteScroll,
+    infiniteScroll
   },
   data() {
     return {
-      inviteLink: location.origin + "/#/trust?q=",
+      inviteLink: location.origin + '/#/trust?q=',
       myInfo: {
         loading: false,
         needInviteCount: 3,
@@ -294,7 +299,7 @@ export default {
         time: 0,
         ifTrustLOOP: false,
         showTaskTwo: false,
-        showMiningInfo: false,
+        showMiningInfo: false
       },
       yourTrusts: {
         loading: false,
@@ -303,9 +308,9 @@ export default {
         ps: 10,
         total: 0,
         speedCount: 0,
-        list: [],
-      },
-    };
+        list: []
+      }
+    }
   },
 
   computed: {
@@ -319,94 +324,107 @@ export default {
   methods: {
     copyFn(content) {
       toCopy(content).then(() => {
-        this.$message.success(this.$t('message.copySuccess'));
-      });
+        this.$message.success(this.$t('message.copySuccess'))
+      })
     },
     showMiningInfoFn() {
-      this.myInfo.showMiningInfo = true;
-      store.set("showMiningInfo", this.user);
+      this.myInfo.showMiningInfo = true
+      store.set('showMiningInfo', this.user)
     },
     toTaskTwo() {
-      this.myInfo.showTaskTwo = true;
-      store.set("showTaskTwo", this.user);
+      this.myInfo.showTaskTwo = true
+      store.set('showTaskTwo', this.user)
     },
     getMyInfo() {
-      this.myInfo.loading = true;
+      this.myInfo.loading = true
       return Api.getMyInfo()
-        .then(async (res) => {
-          console.log("getMyInfo mining:", res);
-          this.myInfo = Object.assign(this.myInfo, res);
+        .then(async res => {
+          console.log('getMyInfo mining:', res)
+          this.myInfo = Object.assign(this.myInfo, res)
           return res
         })
         .finally(() => {
-          this.myInfo.loading = false;
-        });
+          this.myInfo.loading = false
+        })
     },
     trustLOOPToken() {
-      this.myInfo.loading = true;
-      Api.addTrust("0x8adeed9ba5656855622877825f7971fd475fe1b3")
-      .finally(() => {
-        this.myInfo.loading = false;
-      });
+      this.myInfo.loading = true
+      Api.addTrust('0x8adeed9ba5656855622877825f7971fd475fe1b3').finally(() => {
+        this.myInfo.loading = false
+      })
     },
     updateAndClaim() {
-      this.myInfo.loading = true;
+      this.myInfo.loading = true
       Api.updateAndClaim()
-        .then((res) => {
+        .then(res => {
           if (res) {
-            this.$message.success(this.$t('message.harvestSuccess'));
+            this.$message.success(this.$t('message.harvestSuccess'))
           } else {
-            this.$message.warning(this.$t('message.harvestFail'));
+            this.$message.warning(this.$t('message.harvestFail'))
           }
         })
         .finally(() => {
-          this.myInfo.loading = false;
-        });
+          this.myInfo.loading = false
+        })
     },
     withdraw() {
       // 包装内网Token到钱包
-      this.myInfo.loading = true;
+      this.myInfo.loading = true
       Api.wrappToken(this.myInfo.curToken)
-        .then((res) => {
+        .then(res => {
           //如果未approve则提示approve
           if (res) {
-            this.$message.success(
-              this.$t('message.packSuccess')
-            );
+            this.$message.success(this.$t('message.packSuccess'))
           } else {
             // 未Approve
-            this.$message.success(this.$t('message.packed'));
+            this.$message.success(this.$t('message.packed'))
           }
         })
         .finally(() => {
-          this.myInfo.loading = false;
-        });
+          this.myInfo.loading = false
+        })
     },
+    /*
+     *@FunctionName: getTrustMe
+     *@Description: 获取信任我的人日志
+     *@Author: yozora
+     *@Last Modified By: yozora
+     *@Date: 2021-03-02 09:45:38
+     */
     getTrustMe() {
-      this.yourTrusts.loading = true;
-      this.yourTrusts.busy = false;
-      this.yourTrusts.pn++;
+      this.yourTrusts.loading = true
+      this.yourTrusts.busy = false
+      this.yourTrusts.pn++
       if (
         this.yourTrusts.total &&
         this.yourTrusts.list.length >= this.yourTrusts.total
       ) {
-        this.$message.warning(this.$t('noMore'));
-        this.yourTrusts.loading = false;
-        this.yourTrusts.busy = false;
-        return;
+        this.$message.warning(this.$t('noMore'))
+        this.yourTrusts.loading = false
+        this.yourTrusts.busy = false
+        return
       }
-      Api.getTrustMe()
-        .then((res) => {
-          this.yourTrusts.total = res.total;
-          this.yourTrusts.list = [...this.yourTrusts.list, ...res.list];
-          this.yourTrusts.loading = false;
-          this.yourTrusts.busy = false;
+      request({
+        url: this.$API.getTrustMe,
+        method: 'POST',
+        data: {
+          beenTrusted: this.$store.state.user
+        }
+      })
+        .then(response => {
+          //挖矿-获取我信任的人
+
+          this.yourTrusts.total = response.data.data.length
+          this.yourTrusts.list = response.data.data
+
+          this.yourTrusts.loading = false
+          this.yourTrusts.busy = false
         })
         .catch(() => {
-          this.yourTrusts.pn--;
-          this.yourTrusts.loading = false;
-          this.yourTrusts.busy = false;
-        });
+          this.yourTrusts.pn--
+          this.yourTrusts.loading = false
+          this.yourTrusts.busy = false
+        })
     },
     clockTimer(time) {
       let seconds = moment.duration(time).as('seconds')
@@ -414,38 +432,41 @@ export default {
       timer = setInterval(() => {
         seconds--
         let mTime = moment.duration(seconds, 'seconds')
-        this.myInfo.time = moment({ h: mTime.hours(), m: mTime.minutes(), s: mTime.seconds() }).format('HH:mm:ss')
-      }, 1000);
+        this.myInfo.time = moment({
+          h: mTime.hours(),
+          m: mTime.minutes(),
+          s: mTime.seconds()
+        }).format('HH:mm:ss')
+      }, 1000)
     }
   },
   created() {
-    this.getMyInfo()
-    .then(async (res) => {
-      if (res.needInviteCount < 1 && store.get("showTaskTwo") === this.user) {
-        this.myInfo.showTaskTwo = true;
+    this.getMyInfo().then(async res => {
+      if (res.needInviteCount < 1 && store.get('showTaskTwo') === this.user) {
+        this.myInfo.showTaskTwo = true
       }
 
-      if (res.ifTrustLOOP && store.get("showMiningInfo") === this.user) {
-        this.myInfo.showMiningInfo = true;
+      if (res.ifTrustLOOP && store.get('showMiningInfo') === this.user) {
+        this.myInfo.showMiningInfo = true
       }
       this.clockTimer(this.myInfo.time)
       infoTimer && clearInterval(infoTimer)
       infoTimer = setInterval(() => {
         Api.getMyInfo().then(res => {
-          this.myInfo = Object.assign(this.myInfo, res);
-          console.log('轮询', res)
+          this.myInfo = Object.assign(this.myInfo, res)
+          // console.log('轮询', res)
           this.clockTimer(this.myInfo.time)
-        });
-      }, 5000);
-    });
+        })
+      }, 5000)
+    })
   },
   beforeDestroy() {
-    infoTimer && clearInterval(infoTimer);
+    infoTimer && clearInterval(infoTimer)
     timer && clearInterval(timer)
     infoTimer = null
     timer = null
-  },
-};
+  }
+}
 </script>
 
 <style lang="less" scoped>
