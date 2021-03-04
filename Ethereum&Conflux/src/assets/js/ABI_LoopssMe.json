@@ -431,6 +431,25 @@
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "beenPureTrustCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "claim",
 		"outputs": [],
@@ -496,6 +515,25 @@
 			{
 				"internalType": "uint256",
 				"name": "lastUpdatePoint",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_receiver",
+				"type": "address"
+			}
+		],
+		"name": "getDefaultRatioReceiver1e18TokenForNewTrust",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
 				"type": "uint256"
 			}
 		],
@@ -773,25 +811,6 @@
 	{
 		"inputs": [
 			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "pureBeenTrustCount",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
 				"internalType": "string",
 				"name": "_LNS",
 				"type": "string"
@@ -870,6 +889,25 @@
 		"inputs": [
 			{
 				"internalType": "uint256",
+				"name": "_defaultQuoteFor1e18Token",
+				"type": "uint256"
+			}
+		],
+		"name": "setDefaultRatioMy1e18TokenForNewTrust",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
 				"name": "_LLL",
 				"type": "uint256"
 			}
@@ -924,6 +962,19 @@
 				"type": "bool"
 			}
 		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_newSymbol",
+				"type": "string"
+			}
+		],
+		"name": "setSymbol",
+		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
