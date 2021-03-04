@@ -51,7 +51,7 @@ const locale = {
       title: 'Welcome to the future of trust',
       slogan1: 'You need to invite',
       slogan2: 'friends to trust you to start digging the LOOP',
-      loopAddress: 'LOOP contract address'
+      loopAddress: 'LOOPToken contract address'
     },
     mining: {
       title: 'You get the LOOP',
@@ -72,7 +72,7 @@ const locale = {
         },
         next: 'Next',
         step2: {
-          info: 'Step 2/2 Click LOOP button to start',
+          info: 'Step 2/2 Click LOOP button to open mining entrance',
           desc: 'Trust LOOPToken before mining',
           why: 'Why'
         },

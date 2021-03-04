@@ -51,7 +51,7 @@ const locale = {
       title: '欢迎进入信任关系的未来',
       slogan1: '您需要邀请',
       slogan2: '位好友信任您，即可开始挖取 LOOP',
-      loopAddress: 'LOOP合约地址'
+      loopAddress: 'LOOPToken合约地址'
     },
     mining: {
       title: '你获得的 LOOP',
@@ -72,7 +72,7 @@ const locale = {
         },
         next: '下一步',
         step2: {
-          info: '步骤 2/2 点击信任LOOP，即可开始挖',
+          info: '步骤 2/2 点击信任LOOP，开启挖矿入口',
           desc: '挖矿赚取LOOP需要信任LOOPToken的地址之后才能收到LOOP的转账。',
           why: '为什么'
         },
