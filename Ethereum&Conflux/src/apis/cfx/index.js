@@ -211,7 +211,7 @@ const Api = {
       .minerLastUpdateTime(cfx.defaultAccount)
       .call()
     const myDate = new Date()
-    var dTime = 86400 - (parseInt(myDate.getTime() / 1000) - myLastUpdateTime) //直接得到的第三个Trust时间戳
+    var dTime = 86400 - (parseInt(myDate.getTime() / 1000) - (myLastUpdateTime - 60)) //直接得到的第三个Trust时间戳
     if (dTime < 0) {
       dTime = 0
     }
