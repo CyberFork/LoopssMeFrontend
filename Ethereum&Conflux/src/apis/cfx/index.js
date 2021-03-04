@@ -7,7 +7,7 @@ import LoopssMe_ABI from 'assets/js/ABI_LoopssMe.json'
 import LOOPToken_ABI from 'assets/js/ABI_LOOPToken.json'
 import LOOPPool_ABI from 'assets/js/ABI_LOOPPool.json'
 import Web3 from 'web3'
-import request from '@/util/request.js'
+import * as cfxJS from 'js-conflux-sdk'
 
 const {
   // AddressZero,
@@ -28,13 +28,21 @@ const {
 const web3js = new Web3()
 const cfx = window.confluxJS
 const conflux = window.conflux
+// cfxJS.Conflux = new cfxJS.Conflux(window.conflux)
+// const cfx = cfxJS
 const ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/
 
-// Address
-var adLoopssMe = '0x868957d1dfdcdc5ebd44b891c3fa5d6b0405e475'
-var adLOOPToken = '0x8adeed9ba5656855622877825f7971fd475fe1b3'
-var adLOOPPool = '0x81c9d190af86325421e5500baab4d23b1bf350a8'
-// console.log(parseInt(conflux.chainId), adLOOPPool);
+// * Address旧地址
+// var adLoopssMe = '0x868957d1dfdcdc5ebd44b891c3fa5d6b0405e475'
+// var adLOOPToken = '0x8adeed9ba5656855622877825f7971fd475fe1b3'
+// var adLOOPPool = '0x81c9d190af86325421e5500baab4d23b1bf350a8'
+// * Address新地址
+// var adLoopssMe = 'cfxtest:acebvfu86zhn4rm1zb6n1h6r37dbf3vn9yf3nf6p3z'
+// var adLOOPToken = 'cfxtest:acf8c83xj2mshd59zwh6a0w4za9dfnk18jp17v1ppu'
+// var adLOOPPool = 'cfxtest:acc62878t7hcuxctk8dd8rftscj9nfs9np3ybd2yr7'
+var adLoopssMe = '0x8818961eE54eBD3557A878BB9f8dCF4612E62BFd'
+var adLOOPToken = '0x8be17b334614e38f7fac8fc05a5aa83e32ad37f2'
+var adLOOPPool = '0x85cc7bbe7f4e284c4f4f863f34af7091f595df5b'
 // //TODO:conflux.chainId 有时候获取不到，这里就需要阻塞等待，当conflux.chainId获取到了之后才继续执行后面的。否则会报错。
 // switch (parseInt(conflux.chainId)) {
 //   case 42:
@@ -66,7 +74,7 @@ function initContract() {
     abi: LOOPPool_ABI,
     address: adLOOPPool
   })
-  store.dispatch('SetLOOPToken', adLOOPToken)
+  store.dispatch('SetLOOPToken', cfxJS.format.address(adLOOPToken, 1))
 }
 
 if (cfx && conflux) {
@@ -122,6 +130,7 @@ const Api = {
     conflux.on('accountsChanged', async function(accounts) {
       !accounts[0] && store.dispatch('Logout')
     })
+    account = cfxJS.format.address(account, 1)
     return Promise.resolve({ account })
   },
   logout() {

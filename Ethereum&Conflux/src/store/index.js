@@ -3,9 +3,7 @@ import Vuex from 'vuex'
 import router from '@/router'
 import config from '@/config'
 import Api from '@/apis'
-import {
-  loadLanguageAsync
-} from '@/locales'
+import { loadLanguageAsync } from '@/locales'
 
 Vue.use(Vuex)
 
@@ -56,18 +54,14 @@ export default new Vuex.Store({
     },
     SET_CONFLUX(state, bool) {
       state.isConflux = bool
-    },
+    }
   },
   actions: {
-    SaveInvitation({
-      commit
-    }, address) {
+    SaveInvitation({ commit }, address) {
       commit('SAVE_INVITATION', address)
       //router.push(`/trust?q=${address}`)
     },
-    SetMenu({
-      commit
-    }, routes) {
+    SetMenu({ commit }, routes) {
       const menu = []
       routes.map(item => {
         if (item.meta && item.meta.menu) {
@@ -77,68 +71,58 @@ export default new Vuex.Store({
       commit('SET_MENU', menu)
     },
     //开启全局loading
-    ShowLoading({
-      commit
-    }, tip) {
+    ShowLoading({ commit }, tip) {
       commit('SET_LOADING', {
         isShow: true,
         tip
       })
     },
     //关闭全局loading
-    HideLoading({
-      commit
-    }) {
+    HideLoading({ commit }) {
       commit('SET_LOADING', {
         isShow: false
       })
     },
     // 登录
-    Login({
-      commit
-    }, params) {
-      const redirect = router.currentRoute.query.redirect || router.currentRoute.path
+    Login({ commit }, params) {
+      const redirect =
+        router.currentRoute.query.redirect || router.currentRoute.path
       console.log('登录')
-      return Api.login(params)
-        .then(({ account }) => {
-          if (account) {
-            commit('SET_USER', account)
-            if (router.currentRoute.name === 'needLogin') {
-              router.push(redirect)
-            }
+      return Api.login(params).then(({ account }) => {
+        if (account) {
+          commit('SET_USER', account)
+          if (router.currentRoute.name === 'needLogin') {
+            router.push(redirect)
           }
-        })
+        }
+      })
     },
     // 登出
-    Logout({
-      commit,
-      state
-    }) {
+    Logout({ commit, state }) {
       this.dispatch('ShowLoading')
-      return Api.logout()
-        .finally(() => {
-          commit('SET_USER', '')
-          commit('SET_WEB3', null)
-          console.log('登出', router.currentRoute, ['/mining', '/trust'].includes(router.currentRoute.path))
-          this.dispatch('HideLoading')
-          if(['/mining', '/trust'].includes(router.currentRoute.path)){
-            router.push({
-              path: '/error/needLogin',
-              query: {
-                redirect: router.currentRoute.fullPath
-              }
-            })
-          }
-        })
+      return Api.logout().finally(() => {
+        commit('SET_USER', '')
+        commit('SET_WEB3', null)
+        console.log(
+          '登出',
+          router.currentRoute,
+          ['/mining', '/trust'].includes(router.currentRoute.path)
+        )
+        this.dispatch('HideLoading')
+        if (['/mining', '/trust'].includes(router.currentRoute.path)) {
+          router.push({
+            path: '/error/needLogin',
+            query: {
+              redirect: router.currentRoute.fullPath
+            }
+          })
+        }
+      })
     },
-    SetScreen({
-      commit
-    }, screenObj) {
+    SetScreen({ commit }, screenObj) {
       commit('SET_SCREEN', screenObj)
     },
-    SetLang({
-      commit
-    }, lang) {
+    SetLang({ commit }, lang) {
       return new Promise((resolve, reject) => {
         commit('SET_LANG', lang)
         loadLanguageAsync(lang)
@@ -164,6 +148,6 @@ export default new Vuex.Store({
     },
     SetConflux({ commit }, bool) {
       commit('SET_CONFLUX', bool)
-    },
+    }
   }
 })
