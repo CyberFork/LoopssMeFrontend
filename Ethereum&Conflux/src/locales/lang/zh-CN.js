@@ -26,12 +26,12 @@ const locale = {
     info: {
       title: 'LOOP是未来的信任网络',
       slogan: '为使数百万人加入，我们准备以信任关系分发未来货币',
-      totalTip: '理论已挖出',
+      totalTip: 'LOOP已产出',
       info1: 'LOOP 每 10 秒钟 产出1个，信任网络所有成员共同分享',
       info2: '获得好友的信任数量越多，相比其他人可以更快速积累LOOP'
     },
     mining: {
-      total: '理论已挖出',
+      total: 'LOOP已产出',
       minedTotal: '矿池已挖出',
       trustTotal: '挖矿信任量'
     },
