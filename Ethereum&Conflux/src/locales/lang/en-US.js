@@ -26,12 +26,12 @@ const locale = {
     info: {
       title: 'The LOOP is the trust network of the future',
       slogan: 'We are prepared to distribute the currency of the future in a relationship of trust that will enable millions to join',
-      totalTip: 'Total output',
+      totalTip: 'Total LOOP',
       info1: 'LOOP produces one LOOP every 10 seconds, which is shared by all members of the trust network',
       info2: 'The more friends you have to trust, the faster you can accumulate loops than anyone else'
     },
     mining: {
-      total: 'Total output',
+      total: 'Total LOOP',
       minedTotal: 'Mininged',
       trustTotal: 'Network trust volume'
     },

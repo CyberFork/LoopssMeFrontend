@@ -90,7 +90,7 @@ export default {
     getInfo() {
       this.lastTotal = this.total;
       Api.getInfo().then(async (res) => {
-        console.log('getInfo total res:', res)
+        // console.log('getInfo total res:', res)
         this.total = res.total
         this.minedTotal = await res.minedTotal
         this.trustTotal = res.trustTotal

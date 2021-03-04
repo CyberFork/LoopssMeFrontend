@@ -140,7 +140,7 @@ const Api = {
   async getInfo() {
     // 理论产出
     const myDate = new Date()
-    const dTime = parseInt(myDate.getTime() / 10000) - 160897528 //直接得到的第三个Trust时间戳
+    const dTime = parseInt(myDate.getTime() / 10000) - (conflux.chainId === "0x1" ? 161484271 : 160897528) //直接得到的第三个Trust时间戳
     const theoryP = dTime * 0.01
     // 已挖出并包装：
     const _minedTotal = this._formatBigNumber(
