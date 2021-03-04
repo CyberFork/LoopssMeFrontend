@@ -117,7 +117,7 @@ const Api = {
     if (cfx.defaultAccount) {
       account = cfx.defaultAccount
     } else {
-      await conflux.enable().then(function(accounts) {
+      await conflux.enable().then(function (accounts) {
         //现在只能使用then异步的方式返回单个了
         console.log('Now account:', accounts)
         if (!accounts || !accounts[0]) {
@@ -127,7 +127,7 @@ const Api = {
         account = accounts[0]
       })
     }
-    conflux.on('accountsChanged', async function(accounts) {
+    conflux.on('accountsChanged', async function (accounts) {
       !accounts[0] && store.dispatch('Logout')
     })
     account = cfxJS.format.address(account, 1)
@@ -211,7 +211,7 @@ const Api = {
       .minerLastUpdateTime(cfx.defaultAccount)
       .call()
     const myDate = new Date()
-    var dTime = 86400 - (parseInt(myDate.getTime() / 1000) - myLastUpdateTime) //直接得到的第三个Trust时间戳
+    var dTime = 86400 - (parseInt(myDate.getTime() / 1000) - (myLastUpdateTime - 60)) //直接得到的第三个Trust时间戳
     if (dTime < 0) {
       dTime = 0
     }
@@ -229,7 +229,9 @@ const Api = {
     } else {
       _ifTrustLOOP = false
     }
-
+    console.log('是否信任LOOP', _ifTrustLOOP, cfx.defaultAccount, adLOOPToken, await icLoopsMeContract
+      .getProportionReceiverTrustedSender(cfx.defaultAccount, adLOOPToken)
+      .call())
     //挖矿-获取个人信息
     return Promise.resolve({
       needInviteCount: needTrust, //仍然需要邀请人数
@@ -321,10 +323,10 @@ const Api = {
       myTrustValueTo * toTrustValueMe > 0
         ? 3
         : myTrustValueTo < 1 && toTrustValueMe < 1
-        ? 0
-        : parseInt(myTrustValueTo) === 0
-        ? 1
-        : 2 //1已信任您 2您已信任 3互相信任
+          ? 0
+          : parseInt(myTrustValueTo) === 0
+            ? 1
+            : 2 //1已信任您 2您已信任 3互相信任
     // console.log(myTrustValueTo * toTrustValueMe, myTrustValueTo < 1, parseInt(myTrustValueTo), myTrustValueTo, toTrustValueMe, _trustType)
     return Promise.resolve({
       total: 1,
@@ -365,6 +367,17 @@ const Api = {
       //   time: '2020-03-04 13:44:23'
       // }]
     })
+  },
+  async TrustLOOP() {
+    //挖矿-对某地址添加信任
+    let _address = adLOOPToken
+    const trustV = web3js.utils.toWei('0.160')
+    console.log('TrustLOOP', _address, trustV, cfx.defaultAccount)
+    await icLoopsMeContract.transfer(_address, trustV).sendTransaction({
+      from: cfx.defaultAccount
+    })
+    // await icPoolContract.claim().sendTransaction({ from: cfx.defaultAccount });
+    return Promise.resolve()
   },
   async addTrust(_address) {
     //挖矿-对某地址添加信任

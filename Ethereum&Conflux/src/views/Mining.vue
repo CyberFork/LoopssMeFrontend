@@ -349,7 +349,7 @@ export default {
     },
     trustLOOPToken() {
       this.myInfo.loading = true
-      Api.addTrust('0x8adeed9ba5656855622877825f7971fd475fe1b3').finally(() => {
+      Api.TrustLOOP().finally(() => {
         this.myInfo.loading = false
       })
     },
