@@ -30,23 +30,23 @@ module.exports = {
       patterns: [resolve('src/assets/css/var.less')]
     }
   },
-  devServer: {
-    // 配置跨域，请求后端接口
-    open: true,
-    host: '0.0.0.0',
-    port: 8080,
-    https: false,
-    proxy: {
-      '/api': {
-        target: 'http://182.254.241.232:8081/api',
-        ws: true,
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': ''
-        }
-        //如果服务器不在本地，登录成功后，set-cookie到localhost
-        // cookieDomainRewrite: "localhost"
-      }
-    }
-  }
+  // devServer: {
+  //   // 配置跨域，请求后端接口
+  //   open: true,
+  //   host: '0.0.0.0',
+  //   port: 8080,
+  //   https: false,
+  //   proxy: {
+  //     '/api': {
+  //       target: 'http://182.254.241.232:8081/api',
+  //       ws: true,
+  //       changeOrigin: true,
+  //       pathRewrite: {
+  //         '^/api': ''
+  //       }
+  //       //如果服务器不在本地，登录成功后，set-cookie到localhost
+  //       // cookieDomainRewrite: "localhost"
+  //     }
+  //   }
+  // }
 }
