@@ -309,12 +309,13 @@ const Api = {
     })
   },
   async searchByAdress(_address) {
+    const oldAddress = cfxJS.format.hexAddress(_address)
     //挖矿-获取我信任的人
     const myTrustValueTo = await icLoopsMeContract
-      .getProportionReceiverTrustedSender(cfx.defaultAccount, _address)
+      .getProportionReceiverTrustedSender(cfx.defaultAccount, oldAddress)
       .call()
     const toTrustValueMe = await icLoopsMeContract
-      .getProportionReceiverTrustedSender(_address, cfx.defaultAccount)
+      .getProportionReceiverTrustedSender(oldAddress, cfx.defaultAccount)
       .call()
     const _trustType =
       myTrustValueTo * toTrustValueMe > 0
@@ -367,9 +368,10 @@ const Api = {
   },
   async addTrust(_address) {
     //挖矿-对某地址添加信任
+    const oldAddress = cfxJS.format.hexAddress(_address)
     const trustV = web3js.utils.toWei('0.101')
-    console.log('addTrust', _address, trustV, cfx.defaultAccount)
-    await icLoopsMeContract.transfer(_address, trustV).sendTransaction({
+    console.log('addTrust', oldAddress, trustV, cfx.defaultAccount)
+    await icLoopsMeContract.transfer(oldAddress, trustV).sendTransaction({
       from: cfx.defaultAccount
     })
     // await icPoolContract.claim().sendTransaction({ from: cfx.defaultAccount });
@@ -377,8 +379,9 @@ const Api = {
   },
   async minusTrust(_address) {
     //挖矿-对某地址删除信任
+    const oldAddress = cfxJS.format.hexAddress(_address)
     const trustV = web3js.utils.toWei('0')
-    await icLoopsMeContract.transfer(_address, trustV).sendTransaction({
+    await icLoopsMeContract.transfer(oldAddress, trustV).sendTransaction({
       from: cfx.defaultAccount
     })
     return Promise.resolve()
