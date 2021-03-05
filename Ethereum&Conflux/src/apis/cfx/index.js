@@ -140,8 +140,8 @@ const Api = {
   async getInfo() {
     // 理论产出
     const myDate = new Date()
-    const dTime = parseInt(myDate.getTime() / 10000) - (conflux.chainId === "0x1" ? 161484271 : 160897528) //直接得到的第三个Trust时间戳
-    const theoryP = dTime * 0.01
+    const dTime = parseInt(myDate.getTime() / 1000) - (conflux.chainId === "0x1" ? 1614842711 : 1614922152) //直接得到的第三个Trust时间戳 // 2021-03-05 21:29:12 +08:00 CFX主网LOOPToken开始流支付
+    const theoryP = dTime * 0.001
     // 已挖出并包装：
     const _minedTotal = this._formatBigNumber(
       await icPoolContract.totalMined().call()
@@ -229,9 +229,9 @@ const Api = {
     } else {
       _ifTrustLOOP = false
     }
-    console.log('是否信任LOOP', _ifTrustLOOP, cfx.defaultAccount, adLOOPToken, await icLoopsMeContract
-      .getProportionReceiverTrustedSender(cfx.defaultAccount, adLOOPToken)
-      .call())
+    // console.log('是否信任LOOP', _ifTrustLOOP, cfx.defaultAccount, adLOOPToken, await icLoopsMeContract
+    //   .getProportionReceiverTrustedSender(cfx.defaultAccount, adLOOPToken)
+    //   .call())
     //挖矿-获取个人信息
     return Promise.resolve({
       needInviteCount: needTrust, //仍然需要邀请人数

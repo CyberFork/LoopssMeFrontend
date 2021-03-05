@@ -108,7 +108,7 @@ const locale = {
     copyFail: 'Copy Fail',
     harvestSuccess: 'Harvest & Update power Success',
     harvestFail: 'Trust Number too low',
-    packSuccess: 'Token wrapped successfully. Copy Loop address to add to wallet view.',
+    packSuccess: 'Token wrapped successfully. Copy LOOPToken address to add to wallet view.',
     packed: 'Approve the packaged contract'
   }
 }

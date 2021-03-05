@@ -108,7 +108,7 @@ const locale = {
     copyFail: '复制失败',
     harvestSuccess: '收获 & 更新成功',
     harvestFail: '信任数量不足',
-    packSuccess: '包装Token成功。复制LOOP地址添加到钱包查看。',
+    packSuccess: '包装Token成功。复制LOOPToken地址添加到钱包查看。',
     packed: '已Approve包装合约'
   }
 }
