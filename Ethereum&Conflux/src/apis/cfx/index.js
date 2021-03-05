@@ -40,14 +40,17 @@ const ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/
 // var adLoopssMe = 'cfxtest:acebvfu86zhn4rm1zb6n1h6r37dbf3vn9yf3nf6p3z'
 // var adLOOPToken = 'cfxtest:acf8c83xj2mshd59zwh6a0w4za9dfnk18jp17v1ppu'
 // var adLOOPPool = 'cfxtest:acc62878t7hcuxctk8dd8rftscj9nfs9np3ybd2yr7'
+var adLoopssMe;
+var adLOOPToken;
+var adLOOPPool;
 if (conflux.chainId === "0x1") {
-  var adLoopssMe = '0x8818961eE54eBD3557A878BB9f8dCF4612E62BFd'
-  var adLOOPToken = '0x8be17b334614e38f7fac8fc05a5aa83e32ad37f2'
-  var adLOOPPool = '0x85cc7bbe7f4e284c4f4f863f34af7091f595df5b'
+  adLoopssMe = '0x8818961eE54eBD3557A878BB9f8dCF4612E62BFd'
+  adLOOPToken = '0x8be17b334614e38f7fac8fc05a5aa83e32ad37f2'
+  adLOOPPool = '0x85cc7bbe7f4e284c4f4f863f34af7091f595df5b'
 } else {
-  var adLoopssMe = '0x8e5C93229841b3bcAe629339EE89D5958D3D8f0D'
-  var adLOOPToken = '0x8ab601470a66e8037357752db4de5f0e86b9422b'
-  var adLOOPPool = '0x8ba9ebbf48ea4bc12863b3e5bca24c75b5d69739'
+  adLoopssMe = '0x8e5C93229841b3bcAe629339EE89D5958D3D8f0D'
+  adLOOPToken = '0x8ab601470a66e8037357752db4de5f0e86b9422b'
+  adLOOPPool = '0x8ba9ebbf48ea4bc12863b3e5bca24c75b5d69739'
 }
 
 // //TODO:conflux.chainId 有时候获取不到，这里就需要阻塞等待，当conflux.chainId获取到了之后才继续执行后面的。否则会报错。
@@ -147,8 +150,9 @@ const Api = {
   async getInfo() {
     // 理论产出
     const myDate = new Date()
-    const dTime = parseInt(myDate.getTime() / 1000) - (conflux.chainId === "0x1" ? 1614842711 : 1614922152) //直接得到的第三个Trust时间戳 // 2021-03-05 21:29:12 +08:00 CFX主网LOOPToken开始流支付
-    const theoryP = dTime * 0.001
+    console.log(myDate.getTime())
+    const dTime = (parseInt(myDate.getTime()) - (conflux.chainId === "0x1" ? 1614842711000 : 1614950952000)) / 100000 //直接得到的第三个Trust时间戳 // 2021-03-05 21:29:12 +08:00 CFX主网LOOPToken开始流支付
+    const theoryP = dTime * 0.1
     // 已挖出并包装：
     const _minedTotal = this._formatBigNumber(
       await icPoolContract.totalMined().call()
