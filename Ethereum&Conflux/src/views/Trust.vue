@@ -101,7 +101,6 @@ import { toCopy } from 'assets/js/util'
 import i18n from '@/locales'
 import Api from '@/apis'
 import infiniteScroll from 'vue-infinite-scroll'
-import request from '@/util/request'
 
 export default {
   directives: {
@@ -216,13 +215,7 @@ export default {
         this.yourTrusts.busy = false
         return
       }
-      request({
-        url: this.$API.getYouTrust,
-        method: 'POST',
-        data: {
-          trustSender: this.$store.state.user
-        }
-      })
+      Api.getMyTrusts(this.$store.state.user)
         .then(response => {
           //挖矿-获取我信任的人
           this.yourTrusts.total = response.data.data.length

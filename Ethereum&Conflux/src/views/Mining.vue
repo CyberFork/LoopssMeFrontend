@@ -279,7 +279,6 @@ import { toCopy } from 'assets/js/util'
 import store from 'store'
 import Api from '@/apis'
 import infiniteScroll from 'vue-infinite-scroll'
-import request from '@/util/request'
 
 let timer = null //挖矿时间倒计时定时器
 let infoTimer = null //获取挖矿信息定时器
@@ -404,16 +403,10 @@ export default {
         this.yourTrusts.busy = false
         return
       }
-      request({
-        url: this.$API.getTrustMe,
-        method: 'POST',
-        data: {
-          beenTrusted: this.$store.state.user
-        }
-      })
+      Api.getTrustMe(this.$store.state.user)
         .then(response => {
           //挖矿-获取我信任的人
-
+          console.log(response)
           this.yourTrusts.total = response.data.data.length
           this.yourTrusts.list = response.data.data
 

@@ -6,7 +6,9 @@ import { errorNotic } from 'assets/js/util.js'
 import LoopssMe_ABI from 'assets/js/ABI_LoopssMe.json'
 import LOOPToken_ABI from 'assets/js/ABI_LOOPToken.json'
 import LOOPPool_ABI from 'assets/js/ABI_LOOPPool.json'
+import { BASE_URL, TEST_NET_CHAIN } from '../constants.js'
 import Web3 from 'web3'
+import request from '@/util/request'
 import * as cfxJS from 'js-conflux-sdk'
 
 const {
@@ -31,19 +33,11 @@ const conflux = window.conflux
 // cfxJS.Conflux = new cfxJS.Conflux(window.conflux)
 // const cfx = cfxJS
 const ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/
-
-// * Address旧地址
-// var adLoopssMe = '0x868957d1dfdcdc5ebd44b891c3fa5d6b0405e475'
-// var adLOOPToken = '0x8adeed9ba5656855622877825f7971fd475fe1b3'
-// var adLOOPPool = '0x81c9d190af86325421e5500baab4d23b1bf350a8'
+var adLoopssMe
+var adLOOPToken
+var adLOOPPool
 // * Address新地址
-// var adLoopssMe = 'cfxtest:acebvfu86zhn4rm1zb6n1h6r37dbf3vn9yf3nf6p3z'
-// var adLOOPToken = 'cfxtest:acf8c83xj2mshd59zwh6a0w4za9dfnk18jp17v1ppu'
-// var adLOOPPool = 'cfxtest:acc62878t7hcuxctk8dd8rftscj9nfs9np3ybd2yr7'
-var adLoopssMe;
-var adLOOPToken;
-var adLOOPPool;
-if (conflux.chainId === "0x1") {
+if (conflux.chainId === TEST_NET_CHAIN) {
   adLoopssMe = '0x8818961eE54eBD3557A878BB9f8dCF4612E62BFd'
   adLOOPToken = '0x8be17b334614e38f7fac8fc05a5aa83e32ad37f2'
   adLOOPPool = '0x85cc7bbe7f4e284c4f4f863f34af7091f595df5b'
@@ -52,7 +46,6 @@ if (conflux.chainId === "0x1") {
   adLOOPToken = '0x8ab601470a66e8037357752db4de5f0e86b9422b'
   adLOOPPool = '0x8ba9ebbf48ea4bc12863b3e5bca24c75b5d69739'
 }
-
 // //TODO:conflux.chainId 有时候获取不到，这里就需要阻塞等待，当conflux.chainId获取到了之后才继续执行后面的。否则会报错。
 // switch (parseInt(conflux.chainId)) {
 //   case 42:
@@ -84,13 +77,15 @@ function initContract() {
     abi: LOOPPool_ABI,
     address: adLOOPPool
   })
-  store.dispatch('SetLOOPToken', cfxJS.format.address(adLOOPToken, 1))
+  store.dispatch(
+    'SetLOOPToken',
+    cfxJS.format.address(adLOOPToken, Number(conflux.networkVersion))
+  )
 }
 
 if (cfx && conflux) {
   conflux.autoRefreshOnNetworkChange = true
   store.dispatch('SetConflux', true)
-  initContract()
 }
 // conflux.on('networkChanged', function (networkId) {
 //   switch (parseInt(networkId)) {
@@ -123,11 +118,12 @@ const Api = {
       errorNotic('请安装 Conflux Portal 或在 conflux浏览器中运行')
       return Promise.reject(new Error('不支持conflux'))
     }
-
+    // 初始化合约信息
+    initContract()
     if (cfx.defaultAccount) {
       account = cfx.defaultAccount
     } else {
-      await conflux.enable().then(function (accounts) {
+      await conflux.enable().then(function(accounts) {
         //现在只能使用then异步的方式返回单个了
         console.log('Now account:', accounts)
         if (!accounts || !accounts[0]) {
@@ -137,10 +133,10 @@ const Api = {
         account = accounts[0]
       })
     }
-    conflux.on('accountsChanged', async function (accounts) {
+    conflux.on('accountsChanged', async function(accounts) {
       !accounts[0] && store.dispatch('Logout')
     })
-    account = cfxJS.format.address(account, 1)
+    account = cfxJS.format.address(account, Number(conflux.networkVersion))
     return Promise.resolve({ account })
   },
   logout() {
@@ -151,7 +147,10 @@ const Api = {
     // 理论产出
     const myDate = new Date()
     console.log(myDate.getTime())
-    const dTime = (parseInt(myDate.getTime()) - (conflux.chainId === "0x1" ? 1614842711000 : 1614950952000)) / 100000 //直接得到的第三个Trust时间戳 // 2021-03-05 21:29:12 +08:00 CFX主网LOOPToken开始流支付
+    const dTime =
+      (parseInt(myDate.getTime()) -
+        (conflux.chainId === '0x1' ? 1614842711000 : 1614950952000)) /
+      100000 //直接得到的第三个Trust时间戳 // 2021-03-05 21:29:12 +08:00 CFX主网LOOPToken开始流支付
     const theoryP = dTime * 0.1
     // 已挖出并包装：
     const _minedTotal = this._formatBigNumber(
@@ -222,7 +221,8 @@ const Api = {
       .minerLastUpdateTime(cfx.defaultAccount)
       .call()
     const myDate = new Date()
-    var dTime = 86400 - (parseInt(myDate.getTime() / 1000) - (myLastUpdateTime - 120)) //直接得到的第三个Trust时间戳
+    var dTime =
+      86400 - (parseInt(myDate.getTime() / 1000) - (myLastUpdateTime - 120)) //直接得到的第三个Trust时间戳
     if (dTime < 0) {
       dTime = 0
     }
@@ -303,22 +303,43 @@ const Api = {
     // 如果不是，则调用approve
     // await icLOOPTokenContract.methods
   },
-  // ?@Deprecated 日志处理
-  async getTrustMe() {
-    const myTrustCount = (
-      await icLoopsMeContract.getAccountInfoOf(cfx.defaultAccount).call()
-    ).beenTrustCount
-    return Promise.resolve({
-      total: myTrustCount && myTrustCount.length ? myTrustCount[0] : 0,
-      list: trustSet
+  /*
+   *@Author: yozora
+   *@Description: 获取我信任的地址
+   *@Date: 2021-03-06 11:23:52
+   */
+  getTrustMe(userAddress) {
+    // const myTrustCount = (
+    //   await icLoopsMeContract.getAccountInfoOf(cfx.defaultAccount).call()
+    // ).beenTrustCount
+    // return Promise.resolve({
+    //   total: myTrustCount && myTrustCount.length ? myTrustCount[0] : 0,
+    //   list: trustSet
+    // })
+    return request({
+      url: BASE_URL + '/api/log/getTrustYou',
+      method: 'POST',
+      data: {
+        chainId: conflux.chainId,
+        networkVersion: conflux.networkVersion,
+        beenTrusted: userAddress
+      }
     })
   },
-  // ?@Deprecated日志处理
-  async getMyTrusts() {
-    const trustSet = []
-    return Promise.resolve({
-      total: 'Developing...',
-      list: trustSet
+  /*
+   *@Author: yozora
+   *@Description: 获取信任我的地址
+   *@Date: 2021-03-06 11:24:10
+   */
+  getMyTrusts(userAddress) {
+    return request({
+      url: BASE_URL + '/api/log/getYouTrust',
+      method: 'POST',
+      data: {
+        chainId: conflux.chainId,
+        networkVersion: conflux.networkVersion,
+        trustSender: userAddress
+      }
     })
   },
   async searchByAdress(_address) {
@@ -334,10 +355,10 @@ const Api = {
       myTrustValueTo * toTrustValueMe > 0
         ? 3
         : myTrustValueTo < 1 && toTrustValueMe < 1
-          ? 0
-          : parseInt(myTrustValueTo) === 0
-            ? 1
-            : 2 //1已信任您 2您已信任 3互相信任
+        ? 0
+        : parseInt(myTrustValueTo) === 0
+        ? 1
+        : 2 //1已信任您 2您已信任 3互相信任
     // console.log(myTrustValueTo * toTrustValueMe, myTrustValueTo < 1, parseInt(myTrustValueTo), myTrustValueTo, toTrustValueMe, _trustType)
     return Promise.resolve({
       total: 1,

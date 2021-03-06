@@ -13,13 +13,10 @@ import 'components/utils'
 // import 'assets/js/web3'
 //全局公用filter
 import './filters'
-import API from '@/apis/server/api.js'
 
 Vue.use(Antd)
 Vue.config.productionTip = false
 const lang = storage.get('lang') || config.lang
-
-Vue.prototype.$API = API
 
 function checkRouter() {
   router.beforeEach((to, from, next) => {
