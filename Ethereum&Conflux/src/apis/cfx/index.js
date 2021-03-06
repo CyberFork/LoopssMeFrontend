@@ -118,6 +118,7 @@ const Api = {
       errorNotic('请安装 Conflux Portal 或在 conflux浏览器中运行')
       return Promise.reject(new Error('不支持conflux'))
     }
+    console.log(conflux.networkVersion)
     // 初始化合约信息
     initContract()
     if (cfx.defaultAccount) {
