@@ -32,16 +32,19 @@ const cfx = window.confluxJS
 const conflux = window.conflux
 // cfxJS.Conflux = new cfxJS.Conflux(window.conflux)
 // const cfx = cfxJS
-const ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/
+// const ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/
+var ADDRESS_REGEX
 var adLoopssMe
 var adLOOPToken
 var adLOOPPool
 // * Address新地址
 if (conflux.chainId === BaseConstants.TEST_NET_CHAIN) {
+  ADDRESS_REGEX = /^(cfxtest:)[a-zA-Z0-9]{42}$/;
   adLoopssMe = '0x8818961eE54eBD3557A878BB9f8dCF4612E62BFd'
   adLOOPToken = '0x8be17b334614e38f7fac8fc05a5aa83e32ad37f2'
   adLOOPPool = '0x85cc7bbe7f4e284c4f4f863f34af7091f595df5b'
 } else {
+  ADDRESS_REGEX = /^(cfx:)[a-zA-Z0-9]{42}$/;
   adLoopssMe = '0x8e5C93229841b3bcAe629339EE89D5958D3D8f0D'
   adLOOPToken = '0x8ab601470a66e8037357752db4de5f0e86b9422b'
   adLOOPPool = '0x8ba9ebbf48ea4bc12863b3e5bca24c75b5d69739'
@@ -437,6 +440,7 @@ const Api = {
     return Promise.resolve()
   },
   checkAddress(address) {
+    console.log(address)
     if (!ADDRESS_REGEX.test(address)) {
       errorNotic('地址错误')
       return false
