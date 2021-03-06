@@ -447,7 +447,7 @@ export default {
       infoTimer = setInterval(() => {
         Api.getMyInfo().then(res => {
           this.myInfo = Object.assign(this.myInfo, res)
-          // console.log('轮询', res)
+          console.log('轮询', res)
           this.clockTimer(this.myInfo.time)
         })
       }, 5000)

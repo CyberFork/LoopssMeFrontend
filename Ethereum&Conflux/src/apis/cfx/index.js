@@ -6,7 +6,7 @@ import { errorNotic } from 'assets/js/util.js'
 import LoopssMe_ABI from 'assets/js/ABI_LoopssMe.json'
 import LOOPToken_ABI from 'assets/js/ABI_LOOPToken.json'
 import LOOPPool_ABI from 'assets/js/ABI_LOOPPool.json'
-import { BASE_URL, TEST_NET_CHAIN } from '../constants.js'
+import BaseConstants from '../constants.js'
 import Web3 from 'web3'
 import request from '@/util/request'
 import * as cfxJS from 'js-conflux-sdk'
@@ -37,7 +37,7 @@ var adLoopssMe
 var adLOOPToken
 var adLOOPPool
 // * Address新地址
-if (conflux.chainId === TEST_NET_CHAIN) {
+if (conflux.chainId === BaseConstants.TEST_NET_CHAIN) {
   adLoopssMe = '0x8818961eE54eBD3557A878BB9f8dCF4612E62BFd'
   adLOOPToken = '0x8be17b334614e38f7fac8fc05a5aa83e32ad37f2'
   adLOOPPool = '0x85cc7bbe7f4e284c4f4f863f34af7091f595df5b'
@@ -149,7 +149,9 @@ const Api = {
     console.log(myDate.getTime())
     const dTime =
       (parseInt(myDate.getTime()) -
-        (conflux.chainId === '0x1' ? 1614842711000 : 1614950952000)) /
+        (conflux.chainId === BaseConstants.TEST_NET_CHAIN
+          ? 1614842711000
+          : 1614950952000)) /
       100000 //直接得到的第三个Trust时间戳 // 2021-03-05 21:29:12 +08:00 CFX主网LOOPToken开始流支付
     const theoryP = dTime * 0.1
     // 已挖出并包装：
@@ -197,9 +199,11 @@ const Api = {
   },
   async getMyInfo() {
     // 被信任数量计算还需信任数量
+    console.log('defaultAccount', cfx.defaultAccount)
     const myTrustCount = (
       await icLoopsMeContract.getAccountInfoOf(cfx.defaultAccount).call()
     ).beenTrustCount
+    console.log('myTrustCount', myTrustCount)
     const needTrust = myTrustCount > 3 ? 0 : 3 - myTrustCount
     // 获取未领取数量
     const unClaim = this._formatBigNumber(
@@ -317,7 +321,7 @@ const Api = {
     //   list: trustSet
     // })
     return request({
-      url: BASE_URL + '/api/log/getTrustYou',
+      url: BaseConstants.BASE_URL + '/api/log/getTrustYou',
       method: 'POST',
       data: {
         chainId: conflux.chainId,
@@ -333,7 +337,7 @@ const Api = {
    */
   getMyTrusts(userAddress) {
     return request({
-      url: BASE_URL + '/api/log/getYouTrust',
+      url: BaseConstants.BASE_URL + '/api/log/getYouTrust',
       method: 'POST',
       data: {
         chainId: conflux.chainId,
