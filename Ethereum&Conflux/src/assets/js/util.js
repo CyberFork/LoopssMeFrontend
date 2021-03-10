@@ -38,6 +38,34 @@ export const cutStrByFullLength = (str = '', maxLength) => {
 }
 
 /**
+ * 下载通知
+ * @param {*} message
+ */
+export function needDownload(message) {
+  Notification.open({
+    message: h => (
+      <div>
+        <div class="ant-result-title" style="font-size: 16px">
+          {message}
+        </div>
+        <a-divider style="font-size: 16px">前往Chrome商店下载</a-divider>
+        <div style="text-align: center">
+          <a href="https://chrome.google.com/webstore/detail/confluxportal/opafkgfpaamecojfkaialabagfofilmg?utm_source=chrome-ntp-icon">
+            Go Started
+          </a>
+        </div>
+        <a></a>
+      </div>
+    ),
+    style: {
+      width: '500px',
+      marginLeft: `${335 - 500}px`
+    },
+    duration: 0
+  })
+}
+
+/**
  * 错误通知
  * @param {*} message
  */
@@ -58,7 +86,7 @@ export function download(href, fileName) {
 }
 
 export function toCopy(content) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     try {
       const oInput = document.createElement('input')
       oInput.style.position = 'fixed'

@@ -3,12 +3,12 @@
     <a-box>
       <div class="info">
         <div>
-          <div class="title">{{ $t("home.info.title") }}</div>
-          <div class="slogan">{{ $t("home.info.slogan") }}</div>
+          <div class="title">{{ $t('home.info.title') }}</div>
+          <div class="slogan">{{ $t('home.info.slogan') }}</div>
         </div>
         <div>
-          <div class="tip">{{ $t("home.info.info1") }}</div>
-          <div class="tip">{{ $t("home.info.info2") }}</div>
+          <div class="tip">{{ $t('home.info.info1') }}</div>
+          <div class="tip">{{ $t('home.info.info2') }}</div>
         </div>
       </div>
       <div class="mining-info">
@@ -22,37 +22,49 @@
         <div class="total-wrap">
           <countTo
             class="animate-num"
-            :decimals=2
+            :decimals="2"
             :startVal="lastTotal"
             :endVal="total"
             :duration="duration"
           ></countTo>
-          <div>{{ $t("home.info.totalTip") }}</div>
+          <div>{{ $t('home.info.totalTip') }}</div>
         </div>
         <div class="content">
           <div class="cont-item">
             <div class="num">{{ minedTotal | formatNumber(2) }}</div>
-            <div>{{ $t("home.mining.minedTotal") }}</div>
+            <div>{{ $t('home.mining.minedTotal') }}</div>
           </div>
           <div class="cont-item">
             <div class="num">{{ trustTotal }}</div>
-            <div>{{ $t("home.mining.trustTotal") }}</div>
+            <div>{{ $t('home.mining.trustTotal') }}</div>
           </div>
         </div>
       </div>
       <div class="login-wrap" v-show="!user">
-        <div class="title">{{ $t("home.loginBtn.title") }}</div>
+        <div class="title">{{ $t('home.loginBtn.title') }}</div>
         <div v-if="isConflux" class="login-btn block-btn" @click="login">
-          <img src="@/assets/img/cfx.png" alt="">
-          <a-text>{{ $t("home.loginBtn.btnTextCfx") }}</a-text>
+          <img src="@/assets/img/cfx.png" alt="" />
+          <a-text>{{ $t('home.loginBtn.btnTextCfx') }}</a-text>
         </div>
         <div v-else class="login-btn block-btn" @click="login">
-          <img src="@/assets/img/metamask.png" alt="">
-          <a-text>{{ $t("home.loginBtn.btnTextEth") }}</a-text>
+          <img src="@/assets/img/metamask.png" alt="" />
+          <a-text>{{ $t('home.loginBtn.btnTextEth') }}</a-text>
         </div>
       </div>
       <share-box></share-box>
     </a-box>
+
+    <!-- <a-result
+      status="warning"
+      title="请先下载ConfluxPortal."
+      v-show="noConflux"
+    >
+      <template #extra>
+        <a-button key="console" type="primary">
+          Go Chrome Store
+        </a-button>
+      </template>
+    </a-result> -->
   </div>
 </template>
 <script>
@@ -78,18 +90,19 @@ export default {
       minedTotal: 0,
       trustTotal: 0,
       duration: 3000,
-      price: 0
+      price: 0,
+      noConflux: false
     }
   },
   methods: {
-    clearTimer(){
+    clearTimer() {
       this.infoTimer && clearInterval(this.infoTimer)
       this.infoTimer = null
     },
     //TODO 定时刷新(已修改为5s一刷新)
     getInfo() {
-      this.lastTotal = this.total;
-      Api.getInfo().then(async (res) => {
+      this.lastTotal = this.total
+      Api.getInfo().then(async res => {
         // console.log('getInfo total res:', res)
         this.total = res.total
         this.minedTotal = await res.minedTotal
@@ -97,12 +110,12 @@ export default {
       })
     },
     getPrice() {
-      Api.getPrice().then((res) => {
+      Api.getPrice().then(res => {
         this.price = res
       })
     },
     login() {
-      this.$store.dispatch('Login')
+      this.$store.dispatch('Login', this)
     }
   },
   created() {
@@ -111,7 +124,7 @@ export default {
     this.clearTimer()
     this.infoTimer = setInterval(this.getInfo, 5000)
   },
-  beforeDestroy(){
+  beforeDestroy() {
     this.clearTimer()
   }
 }
@@ -123,101 +136,101 @@ export default {
   .info {
     .deep-card;
     text-align: center;
-    height: 856/@r;
+    height: 856 / @r;
     background: url(~@/assets/img/mining_banner.png) no-repeat center/auto 100%;
-    padding-top: 54/@r;
+    padding-top: 54 / @r;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     .title {
-      font-size: 42/@r;
-      line-height: 60/@r;
-      margin-bottom: 15/@r;
+      font-size: 42 / @r;
+      line-height: 60 / @r;
+      margin-bottom: 15 / @r;
     }
     .slogan {
-      font-size: 22/@r;
-      line-height: 30/@r;
+      font-size: 22 / @r;
+      line-height: 30 / @r;
       color: #fff;
     }
-    .tip{
-      font-size: 20/@r;
+    .tip {
+      font-size: 20 / @r;
     }
   }
   .mining-info {
     .light-card;
-    margin: -40/@r 0 40/@r;
+    margin: -40 / @r 0 40 / @r;
     .top {
-      padding: 30/@r 40/@r 0;
+      padding: 30 / @r 40 / @r 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
       color: #fff;
-      img{
-        width: 56/@r;
-        margin-right: 16/@r;
+      img {
+        width: 56 / @r;
+        margin-right: 16 / @r;
       }
-      .price{
-        opacity: .5;
+      .price {
+        opacity: 0.5;
       }
     }
-    .total-wrap{
+    .total-wrap {
       text-align: center;
-      padding: 25/@r 0 36/@r;
+      padding: 25 / @r 0 36 / @r;
       border-bottom: 1px solid #000;
       .animate-num {
         display: block;
-        font-size: 72/@r;
-        line-height: 84/@r;
+        font-size: 72 / @r;
+        line-height: 84 / @r;
         font-weight: 600;
       }
     }
     .content {
       display: flex;
       text-align: center;
-      border-radius: 10/@r;
+      border-radius: 10 / @r;
       .cont-item {
         flex: 1;
-        padding: 30/@r;
+        padding: 30 / @r;
         border-right: 1px solid #000;
         &:last-child {
           border: 0;
         }
-        .num{
-          font-size: 52/@r;
-          line-height: 62/@r;
+        .num {
+          font-size: 52 / @r;
+          line-height: 62 / @r;
           font-weight: bold;
         }
       }
     }
   }
   .login-wrap {
-    padding: 34/@r 60/@r;
+    padding: 34 / @r 60 / @r;
     position: relative;
     text-align: center;
-    &:before{
+    &:before {
       content: '';
       display: block;
       width: 100%;
       height: 100%;
-      border-radius: 40/@r;
+      border-radius: 40 / @r;
       position: absolute;
       top: 0;
       left: 0;
-      background: linear-gradient(310deg, #243187 0%, #009CCF 100%);
+      background: linear-gradient(310deg, #243187 0%, #009ccf 100%);
       opacity: 0.6;
     }
-    .title{
-      font-size: 36/@r;
+    .title {
+      font-size: 36 / @r;
       font-weight: 600;
-      line-height: 50/@r;
-      margin-bottom: 38/@r;
+      line-height: 50 / @r;
+      margin-bottom: 38 / @r;
       position: relative;
     }
-    .login-btn{
-      img{
-        width: 56/@r;
-        height: 50/@r;
-        margin-right: 24/@r;
+    .login-btn {
+      img {
+        width: 56 / @r;
+        height: 50 / @r;
+        margin-right: 24 / @r;
       }
     }
   }

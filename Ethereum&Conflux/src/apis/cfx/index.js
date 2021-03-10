@@ -2,7 +2,7 @@
 // console.log('index.js', w3)
 // import { icLoopsMeContract, icLOOPTokenContract, icPoolContract } from 'assets/js/web3';
 import store from '@/store'
-import { errorNotic } from 'assets/js/util.js'
+import { errorNotic, needDownload } from 'assets/js/util.js'
 import LoopssMe_ABI from 'assets/js/ABI_LoopssMe.json'
 import LOOPToken_ABI from 'assets/js/ABI_LOOPToken.json'
 import LOOPPool_ABI from 'assets/js/ABI_LOOPPool.json'
@@ -32,19 +32,22 @@ const cfx = window.confluxJS
 const conflux = window.conflux
 // cfxJS.Conflux = new cfxJS.Conflux(window.conflux)
 // const cfx = cfxJS
-// const ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/
 var ADDRESS_REGEX
 var adLoopssMe
 var adLOOPToken
 var adLOOPPool
 // * Address新地址
-if (conflux.chainId === BaseConstants.TEST_NET_CHAIN) {
-  ADDRESS_REGEX = /^(cfxtest:)[a-zA-Z0-9]{42}$/;
+if (
+  conflux !== undefined &&
+  conflux !== null &&
+  conflux.chainId === BaseConstants.TEST_NET_CHAIN
+) {
+  ADDRESS_REGEX = /^(cfxtest:)[a-zA-Z0-9]{42}$/
   adLoopssMe = '0x8818961eE54eBD3557A878BB9f8dCF4612E62BFd'
   adLOOPToken = '0x8be17b334614e38f7fac8fc05a5aa83e32ad37f2'
   adLOOPPool = '0x85cc7bbe7f4e284c4f4f863f34af7091f595df5b'
 } else {
-  ADDRESS_REGEX = /^(cfx:)[a-zA-Z0-9]{42}$/;
+  ADDRESS_REGEX = /^(cfx:)[a-zA-Z0-9]{42}$/
   adLoopssMe = '0x8e5C93229841b3bcAe629339EE89D5958D3D8f0D'
   adLOOPToken = '0x8ab601470a66e8037357752db4de5f0e86b9422b'
   adLOOPPool = '0x8ba9ebbf48ea4bc12863b3e5bca24c75b5d69739'
@@ -114,14 +117,13 @@ if (cfx && conflux) {
 
 const Api = {
   //TODO研究如何在切换时新增账号连接
-  async login() {
+  async login(_this) {
     //登录
     let account = ''
     if (!cfx || !conflux) {
-      errorNotic('请安装 Conflux Portal 或在 conflux浏览器中运行')
+      needDownload('请安装 Conflux Portal 或在 conflux浏览器中运行')
       return Promise.reject(new Error('不支持conflux'))
     }
-    console.log(conflux.networkVersion)
     // 初始化合约信息
     initContract()
     if (cfx.defaultAccount) {
@@ -324,6 +326,7 @@ const Api = {
     //   total: myTrustCount && myTrustCount.length ? myTrustCount[0] : 0,
     //   list: trustSet
     // })
+    console.log('userAddress: ' + userAddress)
     return request({
       url: BaseConstants.BASE_URL + '/api/log/getTrustYou',
       method: 'POST',
@@ -340,6 +343,7 @@ const Api = {
    *@Date: 2021-03-06 11:24:10
    */
   getMyTrusts(userAddress) {
+    console.log('userAddress: ' + userAddress)
     return request({
       url: BaseConstants.BASE_URL + '/api/log/getYouTrust',
       method: 'POST',
@@ -440,7 +444,6 @@ const Api = {
     return Promise.resolve()
   },
   checkAddress(address) {
-    console.log(address)
     if (!ADDRESS_REGEX.test(address)) {
       errorNotic('地址错误')
       return false
