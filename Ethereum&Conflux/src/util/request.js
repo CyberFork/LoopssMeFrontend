@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { notification } from 'ant-design-vue'
 
 function request(options) {
   return axios(options)
@@ -11,17 +10,18 @@ function request(options) {
       const {
         response: { status, statusText }
       } = err
-      notification.error({
-        // message: status,
-        // jsx语法
-        // eslint-disable-next-line
-        message: h => (
-          <div>
-            <span style="color: red">请求错误: {status}</span>: {options.url}
-          </div>
-        ),
-        description: statusText
-      })
+      console.error(err)
+      // notification.error({
+      //   // message: status,
+      //   // jsx语法
+      //   // eslint-disable-next-line
+      //   message: h => (
+      //     <div>
+      //       <span style="color: red">请求错误: {status}</span>: {options.url}
+      //     </div>
+      //   ),
+      //   description: statusText
+      // })
       // 阻止进入then流程
       return Promise.reject(err)
     })
