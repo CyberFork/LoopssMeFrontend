@@ -5,6 +5,7 @@
         <slot></slot>
         <template v-if="!isMobile">
           <div v-if="user" class="content">
+            <img src="@/assets/img/go_back.png" class="go-back" v-if="haveGoBack" @click="() => $router.go(-1)" />
             <a-space size="large">
               <div>{{ user | formatUser }} <a-icon type="copy" @click="copyFn(user)" /></div>
               <a-text link @click="logout"> {{ $t("head.logout") }} </a-text>
@@ -13,6 +14,7 @@
             </a-space>
           </div>
           <div v-else class="content">
+            <img src="@/assets/img/go_back.png" class="go-back" v-if="haveGoBack" @click="() => $router.go(-1)" />
             <a-space>
               <a-text link @click="login"> {{ $t("head.login") }} </a-text>
               <!-- <select-lang /> -->
@@ -21,6 +23,7 @@
         </template>
         <template v-else>
           <div class="content">
+            <img src="@/assets/img/go_back.png" class="go-back" v-if="haveGoBack" @click="() => $router.go(-1)" />
             <img class="logo" src="@/assets/img/logo.png" alt="">
             <img class="menu-btn" v-if="!showSideData" src="@/assets/img/menu.png" alt="" @click="showSideFn(true)">
             <img class="close-btn" v-else src="@/assets/img/close.png" alt="" @click="showSideFn(false)">
@@ -48,6 +51,10 @@ export default {
   computed: {
     user() {
       return this.$store.state.user
+    },
+    haveGoBack(){
+      let backRoutes = ['/homePage', '/swap']
+      return backRoutes.includes(this.$route.path)
     }
   },
   watch: {
@@ -92,6 +99,14 @@ export default {
   padding-left: 210/@r;
   width: 100%;
   background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, .7));
+  .go-back{
+    position: absolute;
+    top: 16/@r;
+    left: 0;
+    width: 40 / @r;
+    height: 33 / @r;
+    cursor: pointer;
+  }
   .content{
     display: flex;
     justify-content: flex-end;

@@ -15,17 +15,34 @@ body {
   background-size: 100% 100%;
 }
 
-@media only screen and (min-width: 768px) {
-	html {
-    font-size: 8px !important;
+#bg{
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@media only screen and (min-width: 800px) {
+  body {
+    background-image: url(/static/img/bg_pc.png);
   }
 }
 
 @media only screen and (min-width: 1024px) {
+  html {
+    font-size: 7px !important;
+  }
+}
+
+@media only screen and (min-width: 1367px) {
 	html {
     font-size: 10px !important;
   }
-  body {
-    background-image: url(/static/img/bg_pc.png);
+}
+
+@media only screen and (min-width: 1920px) {
+	html {
+    font-size: 16px !important;
   }
 }

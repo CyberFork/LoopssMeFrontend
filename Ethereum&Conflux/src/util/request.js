@@ -7,9 +7,9 @@ function request(options) {
     })
     .catch(err => {
       // 对象构解赋值
-      const {
-        response: { status, statusText }
-      } = err
+      // const {
+      //   response: { status, statusText }
+      // } = err
       console.error(err)
       // notification.error({
       //   // message: status,

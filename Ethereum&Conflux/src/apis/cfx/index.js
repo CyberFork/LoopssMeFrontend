@@ -83,7 +83,8 @@ function initContract() {
     abi: LOOPPool_ABI,
     address: adLOOPPool
   })
-  store.dispatch(
+
+  conflux.networkVersion && store.dispatch(
     'SetLOOPToken',
     cfxJS.format.address(adLOOPToken, Number(conflux.networkVersion))
   )
@@ -142,7 +143,7 @@ const Api = {
     conflux.on('accountsChanged', async function(accounts) {
       !accounts[0] && store.dispatch('Logout')
     })
-    account = cfxJS.format.address(account, Number(conflux.networkVersion))
+    account = conflux.networkVersion ? cfxJS.format.address(account, Number(conflux.networkVersion)) : account
     return Promise.resolve({ account })
   },
   logout() {
@@ -152,7 +153,6 @@ const Api = {
   async getInfo() {
     // 理论产出
     const myDate = new Date()
-    console.log(myDate.getTime())
     const dTime =
       (parseInt(myDate.getTime()) -
         (conflux.chainId === BaseConstants.TEST_NET_CHAIN

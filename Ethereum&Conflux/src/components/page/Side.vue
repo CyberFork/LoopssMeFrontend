@@ -114,7 +114,7 @@ import { mapState } from 'vuex'
     &.ant-menu-item-selected{
       &:after{
         width: 80/@r;
-        height: 4px;
+        height: 4/@r;
         left: 50%;
         top: 73/@r;
         transform: translateX(-50%);
@@ -150,7 +150,7 @@ import { mapState } from 'vuex'
   overflow: hidden;
   transition: all .5s;
   &.show{
-    max-height: 760px;
+    max-height: 760/@r;
   }
   .logo-wrap{
     display: none;

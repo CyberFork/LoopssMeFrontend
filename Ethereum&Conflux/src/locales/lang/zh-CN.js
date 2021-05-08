@@ -11,10 +11,27 @@ const locale = {
   hello: '您好',
   slogan: '信任驱动，无需质押',
   noMore: '没有更多了',
+  goBack: '返回',
+  setting: '设置',
+  reset: '重置',
+  transfer: '转账',
+  transaction: '交易',
+  toTrust: '信任',
+  truster: '信任者',
+  haveTrust: '已信任',
+  beTrusted: '被信任',
+  holder: '持仓者',
+  trusting: '正在信任',
+  inputQuantity: '输入数量',
+  btnOk: '确定',
+  btnCancel: '取消',
   menu: {
     home: '首页',
     mining: '挖矿',
     trust: '信任',
+    homePage: '主页',
+    wallet: '钱包',
+    swap: '交易',
     more: '更多',
     wait: '正在开发，敬请期待'
   },
@@ -109,7 +126,36 @@ const locale = {
     harvestSuccess: '收获 & 更新成功',
     harvestFail: '信任数量不足',
     packSuccess: '包装Token成功。复制LOOPToken地址添加到钱包查看。',
-    packed: '已Approve包装合约'
+    packed: '已Approve包装合约',
+    setting: '设置成功',
+    submit: '提交成功'
+  },
+  homePage: {
+    yourHoldings: '您持仓',
+  },
+  setTrust: {
+    title: '设置你对 TA 的信任',
+    reset: '重置',
+    trust: '信任',
+    exchange: '兑换',
+    placeholder: {
+      trust: '输入信任百分比',
+      exchange: '输入兑换比率'
+    },
+    tip: {
+      trust: '信任程度代表了对方单次最多可以获得你余额的百分比',
+      exchange: '兑换比率代表了对方需要使用多少个人代币换取我的1个代币'
+    }
+  },
+  toTransfer: {
+    title: '向 TA 转账'
+  },
+  wallet: {
+    trustMe: '信任我的',
+    myTrust: '我信任的'
+  },
+  swap: {
+    title: '向 TA 交易'
   }
 }
 

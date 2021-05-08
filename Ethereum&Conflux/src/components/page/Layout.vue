@@ -89,12 +89,15 @@ export default {
 }
 </style>
 <style lang="less">
-.global-loading > div:first-child > .ant-spin-spinning {
-  position: fixed;
-  max-height: none;
+.global-loading{
+  z-index: 1;
+  > div:first-child > .ant-spin-spinning {
+    position: fixed;
+    max-height: none;
 
-  .ant-spin-text {
-    margin-top: 30 / @r;
+    .ant-spin-text {
+      margin-top: 30 / @r;
+    }
   }
 }
 </style>

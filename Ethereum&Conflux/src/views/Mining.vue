@@ -469,7 +469,7 @@ export default {
   .info {
     .deep-card;
     min-height: 364 / @r;
-    background: url(~@/assets/img/mining_banner_s.png) no-repeat center/100%;
+    background: url(~@/assets/img/mining_banner_s.png) no-repeat center/cover;
 
     .user-info {
       margin-bottom: 48 / @r;

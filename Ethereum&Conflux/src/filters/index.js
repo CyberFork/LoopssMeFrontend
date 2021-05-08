@@ -18,7 +18,7 @@ const filters = {
   },
   formatUser(str){
     if (!str.length) return ''
-    return `${str.slice(0, 4)}****${str.slice(str.length - 5)}`
+    return `${str.slice(0, 5)}****${str.slice(str.length - 4)}`
   },
   toString(obj) {
     if (!obj) return '-'

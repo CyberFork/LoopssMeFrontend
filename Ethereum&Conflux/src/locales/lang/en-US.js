@@ -11,10 +11,23 @@ const locale = {
   hello: 'Hello',
   slogan: 'Trust, No pledge',
   noMore: 'All List loaded all',
+  goBack: 'Go Back',
+  setting: 'Setting',
+  reset: 'Reset',
+  transfer: 'Transfer',
+  transaction: 'Transaction',
+  toTrust: 'Trust',
+  beTrusted: 'Be Trusted',
+  truster: 'Truster',
+  haveTrust: 'Have Trust',
+  holder: 'Holder',
+  trusting: 'Trusting',
   menu: {
     home: 'Home',
     mining: 'Mining',
     trust: 'Trust',
+    homePage: 'Home Page',
+    wallet: 'Wallet',
     more: 'Learn More',
     wait: 'Coming Soon'
   },
@@ -109,7 +122,25 @@ const locale = {
     harvestSuccess: 'Harvest & Update power Success',
     harvestFail: 'Trust Number too low',
     packSuccess: 'Token wrapped successfully. Copy LOOPToken address to add to wallet view.',
-    packed: 'Approve the packaged contract'
+    packed: 'Approve the packaged contract',
+    setting: 'Setting Success'
+  },
+  homePage: {
+    yourHoldings: 'Your Holdings'
+  },
+  setTrust: {
+    title: '设置你对 TA 的信任',
+    reset: '重置',
+    trust: '信任',
+    exchange: '兑换',
+    placeholder: {
+      trust: '输入信任百分比',
+      exchange: '输入兑换比率'
+    },
+    tip: {
+      trust: '信任程度代表了对方单次最多可以获得你余额的百分比',
+      exchange: '兑换比率代表了对方需要使用多少个人代币换取我的1个代币'
+    }
   }
 }
 

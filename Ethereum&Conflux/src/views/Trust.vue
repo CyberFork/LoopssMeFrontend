@@ -1,7 +1,7 @@
 <template>
-  <div class="trust">
+  <div class="trust" id="trust">
     <a-box>
-      <div class="search-wrap">
+      <div class="search-wrap" >
         <div class="input-wrap">
           <a-input-search
             class="search-input"
@@ -249,14 +249,14 @@ export default {
 <style lang="less" scoped>
 .trust {
   .search-wrap {
+    height: 340/@r;
     position: relative;
     padding: 0 30 / @r 24 / @r;
     margin-bottom: 40 / @r;
     z-index: 1;
-    background: url(~@/assets/img/mining_banner.png) no-repeat bottom
-      center/100%;
+    background: url(~@/assets/img/trust_banner.png) no-repeat bottom
+      center/cover;
     border-radius: 30 / @r;
-    height: 340 / @r;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -335,6 +335,16 @@ export default {
       .copy-btn {
         width: 32 / @r;
       }
+    }
+  }
+}
+</style>
+
+<style lang="less">
+@media only screen and (min-width: 800px) {
+  #trust{
+    .search-wrap{
+      height: 340px;
     }
   }
 }

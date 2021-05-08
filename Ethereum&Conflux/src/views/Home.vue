@@ -137,7 +137,7 @@ export default {
     .deep-card;
     text-align: center;
     height: 856 / @r;
-    background: url(~@/assets/img/mining_banner.png) no-repeat center/auto 100%;
+    background: url(~@/assets/img/mining_banner.png) no-repeat center/cover;
     padding-top: 54 / @r;
     display: flex;
     flex-direction: column;
@@ -176,7 +176,7 @@ export default {
     .total-wrap {
       text-align: center;
       padding: 25 / @r 0 36 / @r;
-      border-bottom: 1px solid #000;
+      border-bottom: 1px solid rgba(0, 0, 0, .25);
       .animate-num {
         display: block;
         font-size: 72 / @r;
@@ -191,7 +191,7 @@ export default {
       .cont-item {
         flex: 1;
         padding: 30 / @r;
-        border-right: 1px solid #000;
+        border-right: 1px solid rgba(0, 0, 0, .25);
         &:last-child {
           border: 0;
         }

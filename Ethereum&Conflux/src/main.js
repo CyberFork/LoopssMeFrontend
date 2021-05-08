@@ -22,7 +22,8 @@ function checkRouter() {
   router.beforeEach((to, from, next) => {
     const isLogin = store.state.user
     const redirect = to.fullPath
-    if (!isLogin && (to.path === '/mining' || to.path === '/trust')) {
+    const loginRoutes = ['/mining', '/trust', '/homePage', '/wallet', '/swap']
+    if (!isLogin && loginRoutes.includes(to.path)) {
       next({
         path: '/error/needLogin',
         query: {

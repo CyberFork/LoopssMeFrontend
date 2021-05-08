@@ -18,8 +18,7 @@ const routes = [{
     component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
     meta: {
       title: i18n.t('menu.home'),
-      menu: true,
-      menuIcon: 'home'
+      menu: true
     }
   },
   {
@@ -28,8 +27,7 @@ const routes = [{
     component: () => import(/* webpackChunkName: "mining" */ '@/views/Mining.vue'),
     meta: {
       title: i18n.t('menu.mining'),
-      menu: true,
-      menuIcon: 'setting'
+      menu: true
     }
   },
   {
@@ -38,8 +36,7 @@ const routes = [{
     component: Trust,
     meta: {
       title: i18n.t('menu.trust'),
-      menu: true,
-      menuIcon: 'user'
+      menu: true
     }
   },
   {
@@ -49,6 +46,33 @@ const routes = [{
     meta: {
       title: i18n.t('menu.trust'),
       menu: false
+    }
+  },
+  {
+    path: '/homePage',
+    name: 'homePage',
+    component: () => import(/* webpackChunkName: "homePage" */ '@/views/HomePage.vue'),
+    meta: {
+      title: i18n.t('menu.homePage'),
+      menu: true
+    }
+  },
+  {
+    path: '/wallet',
+    name: 'wallet',
+    component: () => import(/* webpackChunkName: "wallet" */ '@/views/Wallet.vue'),
+    meta: {
+      title: i18n.t('menu.wallet'),
+      menu: true
+    }
+  },
+  {
+    path: '/swap',
+    name: 'swap',
+    component: () => import(/* webpackChunkName: "swap" */ '@/views/Swap.vue'),
+    meta: {
+      title: i18n.t('menu.swap'),
+      menu: true
     }
   },
   {
