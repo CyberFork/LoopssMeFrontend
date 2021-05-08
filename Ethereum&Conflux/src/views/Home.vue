@@ -158,6 +158,7 @@ export default {
   }
   .mining-info {
     .light-card;
+    background: linear-gradient(310deg, rgba(36, 49, 135, 1) 0%, rgba(0, 156, 207, 1)) 80%;
     margin: -40 / @r 0 40 / @r;
     .top {
       padding: 30 / @r 40 / @r 0;
