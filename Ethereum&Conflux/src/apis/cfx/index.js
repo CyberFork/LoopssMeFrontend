@@ -449,6 +449,61 @@ const Api = {
       return false
     }
     return true
+  },
+  /////////////////////////////////////新需求分割线//////////////////////////////////////////
+  //通过地址获取某地址loopss及信任数
+  getLoopInfoByAddress(address) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve({
+          trusting: 2342342, //正在信任数量
+          truster: 3634646, //信任者数量
+          isTrusted: false, //该地址是否已经被信任
+          haveTrust: '40%', //已信任百分比
+          beTrusted: '60%', //被信任百分比
+          loopss: 1243.354, //持仓
+        })
+      }, 1500)
+    })
+  },
+  //获取loopss用户列表
+  getLoopssUsers(){
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve({
+          total: 100,
+          list: [{
+            trustSender: 'x0565555555555',
+            trustType: 2,
+            time: '2020-03-04 13:44:23'
+          }, {
+            trustSender: 'x0565555555555',
+            trustType: 3,
+            time: '2020-03-04 13:44:23'
+          }, {
+            trustSender: 'x0565555555555',
+            trustType: 2,
+            time: '2020-03-04 13:44:23'
+          }, {
+            trustSender: 'x0565555555555',
+            trustType: 1, //1已信任您 2您已信任 3互相信任
+            time: '2020-03-04 13:44:23'
+          }, {
+            trustSender: 'x0565555555555',
+            trustType: 2,
+            time: '2020-03-04 13:44:23'
+          }, {
+            trustSender: 'x0565555555555',
+            trustType: 3,
+            time: '2020-03-04 13:44:23'
+          }, {
+            trustSender: 'x0565555555555',
+            trustType: 2,
+            time: '2020-03-04 13:44:23'
+          }]
+        })
+      }, 1500)
+    })
   }
 }
 

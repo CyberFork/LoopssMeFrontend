@@ -71,6 +71,7 @@
 
 <script>
 import { toCopy } from 'assets/js/util'
+import Api from '@/apis'
 import SetTrust from '@/components/utils/SetTrust.vue'
 import Transfer from '@/components/utils/Transfer.vue'
 
@@ -96,7 +97,9 @@ export default {
         checkedList: ['trustMe'],
         loading: false,
         busy: false,
-        list: []
+        list: [],
+        pn: 1,
+        total: 0
       }
     }
   },
@@ -113,15 +116,46 @@ export default {
     }
   },
   methods:{
-    getList(){
+    getList() {
+      this.trustList.loading = true
+      this.trustList.busy = false
+      this.trustList.pn++
+      this.trustList.list = []
+      if (
+        this.trustList.total &&
+        this.trustList.list.length >= this.trustList.total
+      ) {
+        this.$message.warning(this.$t('noMore'))
+        this.trustList.loading = false
+        this.trustList.busy = false
+        return
+      }
+      Api.getLoopssUsers(this.$store.state.user)
+      .then(data => {
+        //挖矿-获取我信任的人
+        this.trustList.total = data.total
+        this.trustList.list = data.list
+
+        this.trustList.loading = false
+        this.trustList.busy = false
+      })
+      .catch(() => {
+        this.trustList.pn--
+        this.trustList.loading = false
+        this.trustList.busy = false
+      })
     },
     onChange(item){
+      this.getList()
     },
     copyFn(content) {
       toCopy(content).then(() => {
         this.$message.success(this.$t('message.copySuccess'))
       })
     },
+  },
+  created(){
+    this.getList()
   }
 }
 </script>
