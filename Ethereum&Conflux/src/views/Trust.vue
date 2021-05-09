@@ -70,10 +70,10 @@
                 :key="index"
               >
                 <div class="list-item-wrap">
-                  <a-space size="large">
+                  <a-space>
                     <a-text>{{ item.beenTrusted | formatUser }}</a-text>
-                    <div class="add-user">
-                      <a-icon v-if="item.isAdded" type="user-add" />
+                    <div class="add-user" v-if="item.isAdded">
+                      <a-icon type="user-add" />
                     </div>
                     <a-text>{{ item.time }}</a-text>
                   </a-space>
@@ -283,7 +283,7 @@ export default {
         overflow: auto;
         width: 100%;
         position: absolute;
-        margin-top: -4px;
+        margin-top: -4/@r;
         border-radius: 0 0 10 / @r 10 / @r;
         .invite-list {
           color: #082c4c;

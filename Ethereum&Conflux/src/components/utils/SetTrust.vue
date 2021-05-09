@@ -13,13 +13,16 @@
           <div class="tip">{{$t('setTrust.tip.exchange')}}</div>
           <a-button class="reset-btn" type="primary" @click="form.exchange = ''">{{$t('reset')}}</a-button>
         </a-form-model-item>
-        <a-button class="submit-btn" key="submit" type="primary" @click="handleOk">{{$t('btnOk')}}</a-button>
+        <div class="btn-wrap">
+          <a-button class="submit-btn" key="submit" type="primary" @click="handleOk">{{$t('btnOk')}}</a-button>
+        </div>
       </a-form-model>
     </a-spin>
   </a-modal>
 </template>
 
 <script>
+import Api from '@/apis'
 export default {
   name: 'Trust',
   props: {
@@ -32,23 +35,33 @@ export default {
     return {
       loading: false,
       form:{
-        trust: '',
-        exchange: ''
+        trustPercent: '',
+        ratio: ''
       },
       labelCol: { span: 3 },
       wrapperCol: { span: 21 },
     }
   },
+  computed:{
+    user(){
+      let address = this.$route.query.q
+      return address
+    }
+  },
   methods: {
     handleOk(){
+      let params = Object.assign(this.form, {
+        address: this.user
+      })
       this.loading = true
-      setTimeout(() => {
+      Api.setTrust(params)
+      .then(res => {
         this.loading = false
         this.form.trust = ''
         this.form.exchange = ''
         this.$message.success(this.$t('message.submit'))
         this.$emit('close')
-      }, 1000)
+      })
     },
     handleCancel(){
       this.$emit('close')
@@ -60,8 +73,8 @@ export default {
 <style lang="less">
 .set-trust-dialog{
   .ant-modal{
-    width: 670 / @r !important;
-    max-width: 98%;
+    width: 900 / @r !important;
+    max-width: 92%;
   }
   .ant-modal-content{
     border-radius: 30 / @r;
@@ -102,6 +115,9 @@ export default {
           .ant-form-item-label{
             line-height: 70/@r;
           }
+          .ant-form-item-control{
+            line-height: 40/@r;
+          }
           .ant-input{
             padding: 12/@r 330/@r 12/@r 16/@r;
             height: 70/@r;
@@ -118,10 +134,14 @@ export default {
             top: -10/@r;
           }
         }
-        .submit-btn{
-          width: 100%;
-          height: 70/@r;
-          background: #00E983;
+        .btn-wrap{
+          text-align: center;
+          margin: 70/@r 0 20/@r;
+          .submit-btn{
+            width: 430/@r;
+            height: 80/@r;
+            background: #00E983;
+          }
         }
         .tip{
           font-size: 18/@r;

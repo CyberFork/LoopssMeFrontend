@@ -39,14 +39,14 @@
               :key="index"
             >
               <div class="list-item-wrap">
-                <a-space size="large">
+                <a-space>
                   <a-avatar
                     size="large"
                     src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png"
                   />
                   <a-text>{{ item.trustSender | formatUser }}</a-text>
-                  <div class="add-user">
-                    <a-icon v-if="item.isAdded" type="user-add" />
+                  <div class="add-user" v-if="item.isAdded">
+                    <a-icon type="user-add" />
                   </div>
                   <a-text>{{ item.time }}</a-text>
                 </a-space>

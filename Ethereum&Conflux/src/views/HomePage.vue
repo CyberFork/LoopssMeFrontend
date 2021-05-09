@@ -77,11 +77,11 @@
                 <span class="primary">{{myInfo.loopss | formatNumber(2)}}</span>
               </a-space>
             </a-space>
-            <a-space class="btn-wrap" :size="40">
+            <div class="btn-wrap">
               <a-button type="primary" @click="toSetTrust = true">{{$t('setting')}}</a-button>
               <a-button type="primary" @click="toTransfer = true">{{$t('transfer')}}</a-button>
               <a-button type="primary" @click="$router.push('/swap')">{{$t('transaction')}}</a-button>
-            </a-space>
+            </div>
           </div>
         </div>
       </a-spin>
@@ -97,12 +97,12 @@
           <a-list :data-source="trustList.list">
             <a-list-item slot="renderItem" slot-scope="item, index" :key="index">
               <div class="list-item-wrap">
-                <a-space size="large">
+                <a-space>
                   <a-avatar size="large"
                     src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png" />
                   <a-text>{{ item.trustSender | formatUser }}</a-text>
-                  <div class="add-user">
-                    <a-icon v-if="item.isAdded" type="user-add" />
+                  <div class="add-user" v-if="item.isAdded">
+                    <a-icon type="user-add" />
                   </div>
                   <a-text>{{ item.time }}</a-text>
                 </a-space>
@@ -266,6 +266,7 @@
 
     /deep/ .ant-btn-primary {
       background: #00C1DC;
+      border-color: #00C1DC;
     }
 
     .user-info {
@@ -299,14 +300,14 @@
       background: rgba(0, 0, 0, .3);
 
       /deep/ .ant-space {
-        padding: 6px 0;
+        padding: 6/@r 0;
       }
     }
 
     .trust-info {
       text-align: center;
       background: linear-gradient(310deg, #243187 0%, #009CCF 100%);
-      border-radius: 0px 0px 30/@r 30/@r;
+      border-radius: 0 0 30/@r 30/@r;
       padding: 24/@r 40/@r 30/@r;
 
       .your-loopss {
@@ -329,6 +330,10 @@
         /deep/ .ant-btn {
           width: 160/@r;
           height: 60/@r;
+          margin-right: 40/@r;
+          &:last-child{
+            margin-right: 0;
+          }
         }
       }
     }

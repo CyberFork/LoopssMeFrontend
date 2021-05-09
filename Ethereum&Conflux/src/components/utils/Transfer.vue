@@ -4,28 +4,17 @@
       <a-form-model :model="form">
         <div class="flex-box space-between">
           <div>From</div>
-          <div>Balance: {{balance | formatNumber(2)}}</div>
+          <div class="balance">Balance: {{balance | formatNumber(2)}}</div>
         </div>
         <a-form-model-item>
-          <a-input v-model="form.num" autoFocus type="number" :placeholder="$t('inputQuantity')"/>
-          <a-select
-            v-model="form.type"
-            show-search
-            option-filter-prop="children"
-            dropdown-class-name="coin-dropdown"
-            :filter-option="filterOption"
-          >
-            <a-icon slot="suffixIcon" type="caret-down" :style="{ color: '#272727', fontSize: '20px', marginTop: '-3px'}"/>
-            <a-select-option value="jack">
-              Jack
-            </a-select-option>
-            <a-select-option value="lucy">
-              Lucy
-            </a-select-option>
-            <a-select-option value="tom">
-              Tom
-            </a-select-option>
-          </a-select>
+          <div class="coins-input">
+            <a-input v-model="form.num" autoFocus type="number" :placeholder="$t('inputQuantity')"/>
+            <div class="select-wrap">
+              <img src="@/assets/img/user.png" />
+              <span class="name">link</span>
+              <a-icon type="caret-down" class="arrow-down" />
+            </div>
+          </div>
         </a-form-model-item>
         <div class="btn-wrap">
           <a-button class="submit-btn" key="submit" type="primary" @click="handleOk">{{$t('transfer')}}</a-button>
@@ -80,8 +69,8 @@ export default {
 <style lang="less">
 .transfer-dialog{
   .ant-modal{
-    width: 670 / @r !important;
-    max-width: 96%;
+    width: 900 / @r !important;
+    max-width: 92%;
   }
   .ant-modal-content{
     border-radius: 30 / @r;
@@ -103,29 +92,14 @@ export default {
         padding: 40/@r 60/@r;
         .flex-box{
           margin-bottom: 10/@r;
+          font-size: 32/@r;
+          line-height: 46/@r;
+          .balance{
+            font-size: 22/@r;
+          }
         }
         .ant-form-item{
           margin-bottom: 40/@r;
-          position: relative;
-          .ant-input{
-            height: 70/@r;
-            background: transparent;
-            padding: 9/@r 230/@r 9/@r 16/@r;
-          }
-          .ant-select{
-            color: #272727;
-            width: 200/@r;
-            position: absolute;
-            right: 16/@r;
-            top: -11/@r;
-            .ant-select-selection--single{
-              line-height: 50/@r;
-              height: 50/@r;
-              .ant-select-selection__rendered{
-                line-height: 50/@r;
-              }
-            }
-          }
         }
         .btn-wrap{
           text-align: center;

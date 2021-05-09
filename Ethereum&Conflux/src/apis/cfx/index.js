@@ -504,7 +504,29 @@ const Api = {
         })
       }, 1500)
     })
+  },
+  //设置对某地址的信任弹框
+  setTrust(params){
+    // params = {
+    //   address: '0x232312312',
+    //   trustPercent: '', //信任百分比
+    //   ratio: '' //代币兑换比率
+    // }
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve({
+          errno: 0,
+          data: '设置成功'
+        })
+      }, 1500)
+    })
   }
+  //代币列表
+  //某地址某代币的balance
+  //向某地址转账
+  //某代币swap成另一种代币
+  //获取信任我的，我信任的loopss用户
+  //获取持仓者
 }
 
 export default Api
